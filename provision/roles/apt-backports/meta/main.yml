@@ -1,0 +1,14 @@
+galaxy_info:
+  author: yoshiaki tanaka
+  description: install Debian Backports
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+  - name: Debian
+    versions:
+      - jessie
+      - stretch
+  galaxy_tags:
+    - ansible
+
+dependencies: []

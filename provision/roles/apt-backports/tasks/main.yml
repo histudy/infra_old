@@ -1,0 +1,11 @@
+- name: "add {{ ansible_distribution_release }}-backports"
+  apt_repository:
+    repo: 'deb http://ftp.debian.org/debian {{ ansible_distribution_release }}-backports main'
+    filename: "backports"
+- name: change apt config (Default-Release)
+  lineinfile:
+    create: yes
+    dest: /etc/apt/apt.conf.d/99target
+    regexp: '^APT::Default-Release '
+    line: 'APT::Default-Release {{ ansible_distribution_release }}-backports;'
+    state: "{{ 'present' if apt_backports_default_target else 'absent' }}"
