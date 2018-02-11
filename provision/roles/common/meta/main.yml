@@ -9,4 +9,5 @@ galaxy_info:
         - stretch
   galaxy_tags: []
 
-dependencies: []
+dependencies:
+  - apt-backports
