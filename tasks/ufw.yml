@@ -1,0 +1,19 @@
+---
+- name: install ufw
+  apt:
+    name: ufw
+- name: ufw is active and enabled on system startup
+  service:
+    name: ufw
+    enabled: yes
+    state: started
+- name: allow ssh port
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+- name: enable ufw and set default policy
+  ufw:
+    logging: yes
+    state: enabled
+    policy: deny

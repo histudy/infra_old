@@ -1,0 +1,13 @@
+---
+- name: install sudo
+  apt:
+    name: sudo
+- name: create sudo directory
+  file:
+    path: /etc/sudoers.d
+    state: directory
+- name: admin group sudo setting
+  template:
+    src: admin.j2
+    dest: /etc/sudoers.d/admin
+    validate: 'visudo -cf %s'
