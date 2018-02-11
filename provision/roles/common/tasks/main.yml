@@ -1,0 +1,33 @@
+---
+- name: install aptitude package
+  apt:
+    name: aptitude
+- name: set hostname
+  hostname:
+    name: "{{ common_hostname }}"
+  tags:
+    - hostname
+- name: manage group and user
+  import_tasks: user.yml
+  tags:
+    - user
+    - group
+- name: setup sudo
+  import_tasks: sudo.yml
+  tags:
+    - sudo
+- name: install etckeeper
+  apt:
+    name: etckeeper
+- name: install common packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ common_packages }}"
+- name: setup ufw
+  import_tasks: ufw.yml
+  tags:
+    - ufw
+- name: setup fail2ban
+  import_tasks: fail2ban.yml
+  tags:
+    - fail2ban

@@ -1,0 +1,45 @@
+---
+common_packages:
+  - build-essential
+  - curl
+  - wget
+  - sudo
+  - perl
+  - task-japanese
+  - bash-completion
+  - vim
+  - libtool
+  - git
+  - tig
+  - automake
+  - autoconf
+  - pkg-config
+  - ntp
+  - bzip2
+  - zip
+  - unzip
+
+common_hostname: "{{ inventory_hostname }}"
+
+common_groups: []
+  # - name: histudy
+  # - name: kakogawa_infra
+  # - name: yurui_web
+  #   remove: yes
+
+common_users: []
+  # - name: wate
+  #   groups:
+  #     - histudy
+  #     - kakogawwa_infra
+  #   authorized_keys:
+  #     - "{{ lookup('file', '~/.ssh/id_rsa') }}"
+  # - name: sample_user
+  #   password: sampleUserP@ssw0rd
+  #   groups:
+  #     - histudy
+  #   shell: /bin/bash
+  # - name: remove_user
+  #   remove: yes
+
+common_requre_sudo_password: no

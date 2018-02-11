@@ -1,0 +1,12 @@
+galaxy_info:
+  author: wate
+  description: install common python packages
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+  galaxy_tags: []
+
+dependencies: []

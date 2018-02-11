@@ -1,0 +1,32 @@
+---
+- name: install fail2ban
+  apt:
+    name: fail2ban
+- name: set fail2ban log setting
+  ini_file:
+    path: /etc/fail2ban/fail2ban.conf
+    section: Definition
+    option: logtarget
+    value: /var/log/fail2ban.log
+- name: set fail2ban jail settings
+  ini_file:
+    path: /etc/fail2ban/jail.d/local.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    create: yes
+  with_items:
+    - section: DEFAULT
+      option: banaction
+      value: firewallcmd-ipset
+    - section: DEFAULT
+      option: backend
+      value: systemd
+    - section: sshd
+      option: enabled
+      value: yes
+- name: fail2ban active and enabled on system startup service
+  systemd:
+    name: fail2ban
+    enabled: yes
+    state: started

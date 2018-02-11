@@ -1,0 +1,72 @@
+---
+ansible:
+  playbook: playbook.yml
+  group_vars:
+    all:
+      common_groups:
+        - name: histudy
+        - name: kakogawa_infra
+        - name: yurui_web
+          remove: yes
+      common_users:
+        - name: wate
+          admin: yes
+          groups:
+            - histudy
+            - kakogawa_infra
+          authorized_keys:
+            - https://github.com/wate.keys
+        - name: sperkbird
+          admin: yes
+          groups:
+            - histudy
+            - kakogawa_infra
+          authorized_keys:
+            - https://github.com/sperkbird.keys
+        - name: nogajun
+          admin: yes
+          groups:
+            - histudy
+          authorized_keys:
+            - https://github.com/nogajun.keys
+        - name: 223n
+          admin: yes
+          groups:
+            - histudy
+            - kakogawa_infra
+          authorized_keys:
+            - https://github.com/223n.keys
+        - name: fu7mu4
+          groups:
+            - histudy
+          authorized_keys:
+            - https://github.com/fu7mu4.keys
+        - name: akihiro0105
+          groups:
+            - histudy
+        - name: ikatake
+          groups:
+            - histudy
+          authorized_keys:
+            - https://github.com/ikatake.keys
+          remove: yes
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+vagrant:
+  platforms:
+    - name: stretch
+      box: histudy/stretch
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 1
+  instances:
+    - name: common
+      ansible_groups:
+        - default
+verifier:
+  name: serverspec
