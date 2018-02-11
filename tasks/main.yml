@@ -1,0 +1,29 @@
+---
+- name: add mackerel apt key
+  apt_key:
+    url: "https://mackerel.io/file/cert/GPG-KEY-mackerel-v2"
+- name: add mackerel repository
+  apt_repository:
+    repo: "deb http://apt.mackerel.io/v2/ mackerel contrib"
+    filename: mackerel
+- name: install mackerel agent
+  apt:
+    name: mackerel-agent
+- name: install agent plugins
+  apt:
+    name: mackerel-agent-plugins
+  when: mackerel_agent_install_agent_plugins
+- name: install check plugins
+  apt:
+    name: mackerel-check-plugins
+  when: mackerel_agent_install_check_plugins
+- name: create mackerel-agent setting file
+  template:
+    src: mackerel-agent.conf.j2
+    dest: /etc/mackerel-agent/mackerel-agent.conf
+  notify: restart mackerel-agent
+- name: mackerel-agent is active and enabled on system startup service
+  systemd:
+    name: mackerel-agent
+    enabled: "{{ 'yes' if mackerel_agent_active_and_enabled_on_system_startup else 'no' }}"
+    state: "{{ 'started' if mackerel_agent_active_and_enabled_on_system_startup else 'stopped' }}"

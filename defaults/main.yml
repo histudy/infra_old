@@ -1,0 +1,28 @@
+---
+mackerel_agent_api_key: ""
+mackerel_agent_cfg:
+  # pidfile: /var/run/mackerel-agent.pid
+  # root: /var/lib/mackerel-agent
+  # verbose: no
+  # display_name: My Host
+  # http_proxy: http://localhost:8080
+  # roles:
+  #   - My-Service:app
+  #   - Another-Service:db
+  # host_status:
+  #   on_start: working
+  #   on_stop: poweroff
+  # filesystems:
+  #   ignore: /dev/ram.*
+  #   use_mountpoint: yes
+  # plugin:
+  #   metrics:
+  #     apache2: mackerel-plugin-apache2
+  #   checkes:
+  #     log: "/path/to/check-log --file=/path/to/file --pattern=REGEXP --warning-over=N --critical-over=N"
+  #     procs:
+  #       command: "/path/to/check-procs --pattern=PROCESS_NAME --state=STATE --warning-under=N"
+
+mackerel_agent_install_agent_plugins: no
+mackerel_agent_install_check_plugins: no
+mackerel_agent_active_and_enabled_on_system_startup: yes
