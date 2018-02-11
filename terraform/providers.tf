@@ -1,3 +1,1 @@
-provider cloudflare {
-  
-}
+provider cloudflare {}

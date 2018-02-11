@@ -17,3 +17,8 @@ packer_cache/
 ### Terraform Patch ###
 
 *.tfvars
+
+
+### direnv
+.envrc
+
