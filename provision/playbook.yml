@@ -1,0 +1,12 @@
+- name:
+  hosts: all
+  become: yes
+  pre_tasks:
+    - name: update cache
+      apt:
+        update_cache: yes
+  roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
+    - common
+    - mackerel-agent
