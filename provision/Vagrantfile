@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "histudy/stretch"
+
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  config.vm.network "private_network", ip: "192.168.33.254"
+
+  config.vm.synced_folder "./", "/vagrant"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "histudy_stretch"
+    vb.memory = "1024"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    if [ ! -e /etc/apt/sources.list.d/ansible.list ]; then
+      echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >/etc/apt/sources.list.d/ansible.list
+      apt-get install -y dirmngr
+      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+      apt-get update
+    fi
+    if ! command -v "ansible" >/dev/null 2>&1; then
+      apt-get install -y ansible
+      echo "roles_path= /etc/ansible/roles" >>/etc/ansible/ansible.cfg
+      sudo -u vagrant ansible-galaxy install -r /vagrant/requirements.yml
+    fi
+  SHELL
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.config_file = "ansible.cfg"
+    ansible.install = false
+  end
+end
