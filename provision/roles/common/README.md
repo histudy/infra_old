@@ -59,7 +59,7 @@ common_users:
       - group_two
     authorized_keys:
       - https://github.com/hoge.keys
-      - "{{ lookup('file', '~/.ssh/id_rsa') }}"
+      - "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
     shell: /bin/zsh
   - name: fuga
     password: "{{ 'fugap@ssW0rd'|password_hash('sha512') }}"
