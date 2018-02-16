@@ -1,0 +1,3 @@
+{% for domain in dehydrated_domains -%}
+{{ domain if domain is string else domain|join(' ') }}
+{% endfor %}

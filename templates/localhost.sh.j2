@@ -1,0 +1,23 @@
+HOOK=/etc/dehydrated/hook.sh
+
+# Additional config
+DEHYDRATED_USER={{ dehydrated_cfg.user }}
+DEHYDRATED_GROUP={{ dehydrated_cfg.group }}
+IP_VERSION={{ dehydrated_cfg.ip_version }}
+CA="{{ dehydrated_cfg.ca }}"
+OLDCA="{{ dehydrated_cfg.oldca }}"
+CHALLENGETYPE="{{ dehydrated_cfg.challengetype }}"
+KEYSIZE="{{ dehydrated_cfg.keysize }}"
+OPENSSL_CNF={{ dehydrated_cfg.openssl_cnf }}
+OPENSSL="{{ dehydrated_cfg.openssl }}"
+CURL_OPTS="{{ dehydrated_cfg.curl_opts }}"
+HOOK_CHAIN="{{ 'yes' if dehydrated_cfg.hook_chain else 'no' }}"
+RENEW_DAYS="{{ dehydrated_cfg.renew_days }}"
+PRIVATE_KEY_RENEW="{{ 'yes' if dehydrated_cfg.private_key_renew else 'no' }}"
+PRIVATE_KEY_ROLLOVER="{{ 'yes' if dehydrated_cfg.private_key_rollover else 'no' }}"
+KEY_ALGO={{ dehydrated_cfg.key_algo }}
+CONTACT_EMAIL={{ dehydrated_cfg.contact_email }}
+OCSP_MUST_STAPLE="{{ 'yes' if dehydrated_cfg.ocsp_must_staple else 'no' }}"
+OCSP_FETCH="{{ 'yes' if dehydrated_cfg.ocsp_fetch else 'no' }}"
+AUTO_CLEANUP="{{ 'yes' if dehydrated_cfg.auto_cleanup else 'no' }}"
+API={{ dehydrated_cfg.api }}

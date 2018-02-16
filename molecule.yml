@@ -1,0 +1,62 @@
+---
+ansible:
+  group_vars:
+    all:
+      dehydrated_cron:
+        hour: 1
+        minute: 23
+      dehydrated_auto_execute: no
+      dehydrated_cfg:
+        ca: https://acme-staging.api.letsencrypt.org/directory
+        challengetype: dns-01
+        ip_version: 4
+        user: "root"
+        group: "adm"
+        oldca: ""
+        keysize: 2048
+        openssl_cnf: ""
+        openssl: /usr/bin/openssl
+        curl_opts: ""
+        hook_chain: yes
+        renew_days: 31
+        private_key_renew: no
+        private_key_rollover: yes
+        key_algo: prime256v1
+        contact_email: "pc.poisoning@gmail.com"
+        ocsp_must_staple: yes
+        ocsp_fetch: no
+        auto_cleanup: yes
+        api: 1
+      dehydrated_domains:
+        - example.com
+        - [example.net, www.example.net]
+      dehydrated_hook_initialize: "# test hook initialize"
+      dehydrated_hook_deploy_challenge: "# test deploy_challenge hook"
+      dehydrated_hook_clean_challenge: "# test clean_challenge hook"
+      dehydrated_hook_deploy_cert: "# test deploy_cert hook"
+      dehydrated_hook_unchanged_cert: "# test unchanged_cert hook"
+      dehydrated_hook_invalid_challenge: "# test invalid_challenge hook"
+      dehydrated_hook_request_failure: "# test request_failure hook"
+      dehydrated_hook_generate_csr: "# test generate_csr hook"
+      dehydrated_hook_startup_hook: "# test startup_hook hook"
+      dehydrated_hook_exit_hook: "# test exit_hook hook"
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+vagrant:
+  platforms:
+    - name: stretch
+      box: histudy/stretch
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 1
+  instances:
+    - name: dehydrated
+      ansible_groups:
+        - default
+verifier:
+  name: serverspec
