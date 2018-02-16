@@ -1,0 +1,5 @@
+---
+- name: install python packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ python_packages }}"
