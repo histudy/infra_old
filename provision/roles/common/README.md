@@ -12,9 +12,9 @@ Role Variables
 | common_groups               | サーバーの登録するグループを設定します                                       |
 | common_users                | サーバーに登録するユーザーを設定します                                       |
 | common_packages             | 共通でインストールするパッケージ名を設定します                               |
-| common_ssh_use_geoip_filter | GeoIPによるSSHのフィルタリングを行うか否かを設定します                   |
-| common_ssh_allow_countries  | SSHへの接続を許可する接続元の国コードを設定します                        |
-| common_cron_geoip_update    | cronで実行するGeoIPデータベース更新処理の実行時刻を設定します            |
+| common_ssh_use_geoip_filter | GeoIPによるSSHのフィルタリングを行うか否かを設定します                       |
+| common_ssh_allow_countries  | SSHへの接続を許可する接続元の国コードを設定します                            |
+| common_cron_geoip_update    | cronで実行するGeoIPデータベース更新処理の実行時刻を設定します                |
 | common_requre_sudo_password | sudoでコマンドを実行する場合にパスワードの入力を必要とするか否かを設定します |
 | common_fail2ban_cfg         | fail2banの設定を定義します                                                   |
 
