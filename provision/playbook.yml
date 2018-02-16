@@ -10,3 +10,5 @@
     - dev-sec.ssh-hardening
     - common
     - mackerel-agent
+    - lexicon
+    - dehydrated

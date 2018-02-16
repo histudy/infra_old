@@ -1,0 +1,19 @@
+dehydrated_cfg:
+  challengetype: dns-01
+
+dehydrated_domains:
+  - ["{{ domain }}", "www.{{ domain }}"]
+
+dehydrated_auto_execute: yes
+
+dehydrated_hook_initialize: |
+  export PROVIDER=cloudflare
+  export LEXICON_CLOUDFLARE_USERNAME="{{ lookup('env', 'CLOUDFLARE_EMAIL') }}"
+  export LEXICON_CLOUDFLARE_TOKEN="{{ lookup('env', 'CLOUDFLARE_TOKEN') }}"
+
+dehydrated_hook_deploy_challenge: |
+  lexicon ${PROVIDER} create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
+  sleep 30
+
+dehydrated_hook_clean_challenge: |
+  lexicon ${PROVIDER} delete ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"

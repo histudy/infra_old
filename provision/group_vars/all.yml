@@ -3,6 +3,8 @@ ssh_allow_root_with_key: yes
 ssh_use_pam: yes
 sftp_enabled: yes
 
+domain: histudy.jp
+
 common_groups:
   - name: histudy
   - name: kakogawa_infra
@@ -42,3 +44,11 @@ common_users:
       - "https://github.com/fu7mu4.keys"
 
 mackerel_agent_api_key: "{{ lookup('env', 'MACKEREL_API_KEY') }}"
+
+common_cron_geoip_update:
+  hour: 1
+  minute: 23
+
+dehydrated_cron:
+  hour: 2
+  minute: 34
