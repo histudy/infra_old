@@ -43,3 +43,11 @@ common_users: []
   #   remove: yes
 
 common_requre_sudo_password: no
+
+common_ssh_use_geoip_filter: yes
+common_ssh_allow_countries:
+  - JP
+
+common_cron_geoip_update:
+  hour: "{{ 23|random }}"
+  minute: "{{ 59|random }}"
