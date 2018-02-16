@@ -1,0 +1,21 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+vagrant:
+  platforms:
+    - name: stretch
+      box: histudy/stretch
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 1
+  instances:
+    - name: python
+      ansible_groups:
+        - default
+verifier:
+  name: serverspec
