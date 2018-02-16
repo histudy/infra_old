@@ -1,0 +1,33 @@
+---
+- name: install dehydrated
+  apt:
+    name: dehydrated
+    default_release: "{{ ansible_distribution_release }}-backports"
+- name: create config file
+  template:
+    src: localhost.sh.j2
+    dest: /etc/dehydrated/conf.d/localhost.sh
+- name: create domains txt
+  template:
+    src: domains.txt.j2
+    dest: /etc/dehydrated/domains.txt
+- name: create hook script
+  template:
+    src: hook.sh.j2
+    dest: "/etc/dehydrated/hook.sh"
+    mode: "0755"
+- name: register account key
+  command: /usr/bin/dehydrated --register --accept-terms
+  args:
+    creates: /var/lib/dehydrated/accounts
+- name: sign/renew non-existent/changed/expiring certificates
+  command: /usr/bin/dehydrated --cron
+  when: dehydrated_auto_execute
+- name: set shedule renew certificates job
+  cron:
+    name: "dehydrated sign/renew non-existant/changed/expiring certificates"
+    cron_file: ansible_management_job
+    job: /usr/bin/dehydrated --cron
+    user: root
+    hour: "{{ dehydrated_cron.hour }}"
+    minute: "{{ dehydrated_cron.minute }}"
