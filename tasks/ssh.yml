@@ -1,0 +1,40 @@
+---
+- name: install dependency packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - geoip-bin
+    - geoip-database
+    - gzip
+    - cron
+- name: create ssh filter script
+  template:
+    src: sshfilter.j2
+    dest: /usr/local/bin/sshfilter
+    mode: 0755
+- name: create GeoIP database update script
+  copy:
+    src: update_geoip_database.sh
+    dest: /usr/local/bin/update_geoip_database
+    mode: 0755
+- name: set shedule update GeoIP database job
+  cron:
+    name: "Update GeoIP database"
+    cron_file: ansible_management_job
+    job: /usr/local/bin/update_geoip_database
+    user: root
+    hour: "{{ common_cron_geoip_update.hour }}"
+    minute: "{{ common_cron_geoip_update.minute }}"
+    state: "{{ 'present' if common_ssh_use_geoip_filter else 'absent' }}"
+- name: set TCP Wrapper(deny)
+  lineinfile:
+    path: /etc/hosts.deny
+    regexp: "^sshd: "
+    line: 'sshd: ALL'
+    state: "{{ 'present' if common_ssh_use_geoip_filter else 'absent' }}"
+- name: set TCP Wrapper(allow)
+  lineinfile:
+    path: /etc/hosts.allow
+    regexp: "^sshd: "
+    line: 'sshd: ALL: aclexec /usr/local/bin/sshfilter %a'
+    state: "{{ 'present' if common_ssh_use_geoip_filter else 'absent' }}"

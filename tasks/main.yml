@@ -12,6 +12,19 @@
   tags:
     - user
     - group
+- name: check ansible manage cron job file
+  stat:
+    path: /etc/cron.d/ansible_management_job
+  register: result
+- name: create ansible manage cron job file
+  file:
+    path: /etc/cron.d/ansible_management_job
+    state: touch
+  when: not result.stat.exists
+- name: setup ssh
+  import_tasks: ssh.yml
+  tags:
+    - ssh
 - name: setup sudo
   import_tasks: sudo.yml
   tags:
