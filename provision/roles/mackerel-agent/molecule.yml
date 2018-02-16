@@ -20,7 +20,7 @@ driver:
 vagrant:
   platforms:
     - name: stretch
-      box: wate/debian-9
+      box: histudy/stretch
   providers:
     - name: virtualbox
       type: virtualbox
