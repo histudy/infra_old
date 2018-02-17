@@ -10,7 +10,7 @@
 - name: allow ssh port
   ufw:
     rule: limit
-    port: ssh
+    port: "{{ common_ssh_port }}"
     proto: tcp
 - name: enable ufw and set default policy
   ufw:

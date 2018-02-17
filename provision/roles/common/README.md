@@ -12,6 +12,7 @@ Role Variables
 | common_groups               | サーバーの登録するグループを設定します                                       |
 | common_users                | サーバーに登録するユーザーを設定します                                       |
 | common_packages             | 共通でインストールするパッケージ名を設定します                               |
+| common_ssh_port             | SSH用のポート番号を指定します                                                |
 | common_ssh_use_geoip_filter | GeoIPによるSSHのフィルタリングを行うか否かを設定します                       |
 | common_ssh_allow_countries  | SSHへの接続を許可する接続元の国コードを設定します                            |
 | common_cron_geoip_update    | cronで実行するGeoIPデータベース更新処理の実行時刻を設定します                |
@@ -99,6 +100,16 @@ common_packages:
   - git
 ```
 
+### common_ssh_port
+
+SSH用のポート番号を指定します
+
+#### Example
+
+```yml
+common_ssh_port: 22
+```
+
 ### common_ssh_use_geoip_filter
 
 GeoIPによるSSHのフィルタリングを行うか否かを設定します
@@ -111,7 +122,7 @@ common_ssh_use_geoip_filter: yes
 
 ### common_ssh_allow_countries
 
-SSHへの接続を許可する接続元の国コードを設定します
+SSHへの接続を許可する接続元の国コードを設定します。  
 ※common_ssh_use_geoip_filterが`true`に設定されている場合のみ有効です
 
 #### Example
@@ -124,7 +135,7 @@ common_ssh_allow_countries:
 
 ### common_cron_geoip_update
 
-cronで実行するGeoIPデータベース更新処理の実行時刻を設定します
+cronで実行するGeoIPデータベース更新処理の実行時刻を設定します。  
 ※common_ssh_use_geoip_filterが`true`に設定されている場合のみ有効です
 
 | 項目   | 必須 | 内容                           |
