@@ -1,9 +1,12 @@
 # Created by https://www.gitignore.io/
 
+### Packer ###
+### 
 # Cache objects
 packer_cache/
 
-# For built boxes
+### Vagrant ###
+.vagrant/
 *.box
 
 ### Terraform ###
@@ -18,16 +21,5 @@ packer_cache/
 
 *.tfvars
 
-
 ### direnv
 .envrc
-
-
-# Created by https://www.gitignore.io/api/vagrant
-
-### Vagrant ###
-.vagrant/
-*.box
-
-
-# End of https://www.gitignore.io/api/vagrant
