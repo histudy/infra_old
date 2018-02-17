@@ -3,6 +3,11 @@ lexicon
 
 [lexicon](https://github.com/AnalogJ/lexicon)をインストールします
 
+Dependencies
+------------
+
+* [python](https://github.com/histudy/ansible-role-python)
+
 Example Playbook
 ----------------
 
