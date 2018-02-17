@@ -5,8 +5,8 @@ require 'spec_helper'
     it { should be_installed }
   end
   describe service(name) do
-    it { should_not be_enabled }
-    it { should_not be_running }
+    it { should be_enabled }
+    it { should be_running }
   end
 end
 
