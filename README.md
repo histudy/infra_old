@@ -31,8 +31,10 @@ Ansibleを利用しサーバーの構成を管理しています。
 | 環境変数名         | 内容                                     |
 | ------------------ | ---------------------------------------- |
 | VAGRANTCLOUD_TOKEN | [Vagrant Cloud][vagrant_cloud]のトークン |
-| CLOUDFLARE_EMAIL   | [Cloudflare][cloudflare]のアカウント                   |
-| CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン                  |
+| CLOUDFLARE_EMAIL   | [Cloudflare][cloudflare]のアカウント     |
+| CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン    |
+| MACKEREL_API_KEY   | [Mackerel][mackerel]のAPIキー            |
 
 [vagrant_cloud]: https://app.vagrantup.com/histudy
 [cloudflare]: https://www.cloudflare.com/
+[mackerel]: https://mackerel.io/
