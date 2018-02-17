@@ -148,6 +148,11 @@ startup_hookフック呼び出し時の実行内容を定義します
 
 exit_hookフック呼び出し時の実行内容を定義します
 
+Dependencies
+------------
+
+* [apt-backports](https://github.com/histudy/ansible-role-apt-backports)
+
 Example Playbook
 ----------------
 
