@@ -3,7 +3,7 @@
   apt:
     name: ufw
 - name: ufw is active and enabled on system startup
-  service:
+  systemd:
     name: ufw
     enabled: yes
     state: started

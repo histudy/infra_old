@@ -173,6 +173,12 @@ common_fail2ban_cfg:
     enabled: yes
 ```
 
+
+Dependencies
+------------
+
+* [apt-backports](https://github.com/histudy/ansible-role-apt-backports)
+
 Example Playbook
 ----------------
 
