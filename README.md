@@ -7,7 +7,7 @@
 
 ### OS
 
-debian / cloudflare
+Debian 9(stretch)
 
 ディレクトリ構成
 ---------------------------
