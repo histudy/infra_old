@@ -1,10 +1,3 @@
-variable "ns_records" {
-  default = [
-    "ns1.dns.ne.jp",
-    "ns2.dns.ne.jp",
-  ]
-}
-
 resource cloudflare_record "at" {
   domain = "histudy.jp"
   name   = "@"
@@ -19,10 +12,24 @@ resource cloudflare_record "www" {
   type   = "A"
 }
 
-resource cloudflare_record "mail" {
+resource cloudflare_record "mail_primary" {
   domain = "histudy.jp"
   name   = "mail"
   type   = "NS"
-  value  = "${var.ns_records[count.index]}"
-  count  = 2
+  value  = "ns1.dns.ne.jp"
+}
+
+resource cloudflare_record "mail_secondary" {
+  domain = "histudy.jp"
+  name   = "mail"
+  type   = "NS"
+  value  = "ns2.dns.ne.jp"
+}
+
+resource cloudflare_record "postmaster_tool_auth" {
+  domain = "histudy.jp"
+  name   = "@"
+  type   = "TXT"
+  ttl    = "86400"
+  value  = "google-site-verification=7PjGDFZDUN-c85npu9gYvkj1DN0SVGnRBVhQQDDv5nY"
 }
