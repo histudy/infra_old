@@ -1,0 +1,21 @@
+---
+- name: install nginx packages
+  apt:
+    name: "{{ item }}"
+    default_release: "{{ ansible_distribution_release }}-backports"
+  with_items: "{{ nginx_packages }}"
+- name: nginx is active and enabled on system startup
+  systemd:
+    name: nginx
+    enabled: yes
+    state: started
+- name:  allow http port
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+- name:  allow https port
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp
