@@ -2,9 +2,10 @@
   hosts: all
   become: yes
   pre_tasks:
-    - name: update cache
+    - name: update cache and cleanup package
       apt:
         update_cache: yes
+        autoremove: yes
   roles:
     - dev-sec.os-hardening
     - dev-sec.ssh-hardening
@@ -12,3 +13,4 @@
     - mackerel-agent
     - lexicon
     - dehydrated
+    - nginx
