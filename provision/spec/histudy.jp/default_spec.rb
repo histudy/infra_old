@@ -1,9 +1,12 @@
 require 'spec_helper'
 
-%w[ufw mackerel-agent].each do |name|
+%w[ufw etckeeper mackerel-agent].each do |name|
   describe package(name) do
     it { should be_installed }
   end
+end
+
+%w[ufw mackerel-agent].each do |name|
   describe service(name) do
     it { should be_enabled }
     it { should be_running }
