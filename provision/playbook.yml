@@ -14,3 +14,18 @@
     - lexicon
     - dehydrated
     - nginx
+  tasks:
+    - name: clound-init hostname setting
+      block:
+        - name: check clound-init config
+          stat:
+            path: /etc/cloud/cloud.cfg
+          register: result
+        - name: remove clound-init hostname reset setting
+          lineinfile:
+            path: /etc/cloud/cloud.cfg
+            regexp: "^manage_etc_hosts: (yes|on|true)"
+            state: absent
+          when: result.stat.exists
+      tags:
+        - hostname
