@@ -14,6 +14,32 @@ dehydrated_hook_initialize: |
 dehydrated_hook_deploy_challenge: |
   lexicon ${PROVIDER} create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
   sleep 30
+  systemctl reload nginx
 
 dehydrated_hook_clean_challenge: |
   lexicon ${PROVIDER} delete ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
+
+nginx_vhosts:
+  - name: default
+    default: yes
+    server_name: "{{ domain }}"
+    access_log: /var/log/nginx/access.log
+    error_log: /var/log/nginx/error.log
+    document_root: /var/www/html
+    index:
+      - index.html
+      - index.htm
+    locations:
+      - pattern: "/\\.ht"
+        match_type: "~"
+        content: "deny all;"
+    ssl:
+      certificate: /var/lib/dehydrated/certs/{{ domain }}/fullchain.pem
+      certificate_key:  /var/lib/dehydrated/certs/{{ domain }}/privkey.pem
+      hsts: "max-age=15768000;"
+      stapling: yes
+      stapling_verify: yes
+  - name: default_non_ssl
+    server_name: "{{ domain }}"
+    includes:
+      - snippets/redirect_https.conf
