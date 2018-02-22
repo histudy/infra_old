@@ -19,6 +19,11 @@ dehydrated_hook_deploy_challenge: |
 dehydrated_hook_clean_challenge: |
   lexicon ${PROVIDER} delete ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
 
+nginx_cfg:
+  http:
+    ssl:
+      dhparam: "{{ nginx_dh_key_path }}"
+
 nginx_vhosts:
   - name: default
     default: yes
