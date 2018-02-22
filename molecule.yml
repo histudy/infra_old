@@ -2,9 +2,152 @@
 ansible:
   group_vars:
     all:
-      common_cron_geoip_update:
-        hour: 1
-        minute: 23
+      nginx_cfg:
+        user: "www-data"
+        worker_processes: auto
+        pid: /run/nginx.pid
+        events:
+          worker_connections: 768
+        http:
+          sendfile: yes
+          tcp_nopush: yes
+          tcp_nodelay: yes
+          keepalive_timeout: 65
+          types_hash_max_size: 2048
+          server_tokens: no
+          default_type: "application/octet-stream"
+          server_names_hash_bucket_size: 64
+          server_name_in_redirect: no
+          access_log: /var/log/nginx/access.log
+          error_log: /var/log/nginx/error.log
+          client_max_body_size: 8M
+          ssl:
+            protocols:
+              - TLSv1.2
+            ciphers:
+              - ECDHE-ECDSA-AES256-GCM-SHA384
+              - ECDHE-RSA-AES256-GCM-SHA384
+              - ECDHE-ECDSA-CHACHA20-POLY1305
+              - ECDHE-RSA-CHACHA20-POLY1305
+              - ECDHE-ECDSA-AES128-GCM-SHA256
+              - ECDHE-RSA-AES128-GCM-SHA256
+              - ECDHE-ECDSA-AES256-SHA384
+              - ECDHE-RSA-AES256-SHA384
+              - ECDHE-ECDSA-AES128-SHA256
+              - ECDHE-RSA-AES128-SHA256
+            dhparam: /etc/nginx/dhparam.pem
+            prefer_server_ciphers: yes
+            session_timeout: "1d"
+            session_cache: "shared:SSL:50m"
+            session_tickets: no
+            hsts: "max-age=15768000; includeSubDomains;"
+            stapling: yes
+            stapling_verify: yes
+          gzip: yes
+          gzip_vary: yes
+          gzip_proxied: any
+          gzip_comp_level: 6
+          gzip_buffers: "16 8k"
+          gzip_http_version: 1.1
+          gzip_types:
+            - text/plain
+            - text/css
+            - application/json
+            - application/javascript
+            - text/xml
+            - application/xml
+            - application/xml+rss
+            - text/javascript
+        extra_setting: "# nginx.conf extra setting"
+      nginx_vhosts:
+        - name: test_1
+          default: yes
+          server_name: "test1.exampe.com test-1.exampe.com"
+          access_log: /var/log/nginx/access.log
+          error_log: /var/log/nginx/error.log
+          document_root: /var/www/html
+          variables:
+            var1_name: var1_value
+            var2_name: var2_value
+          client_max_body_size: 16M
+          index: "test1.html test1.htm"
+          includes:
+            - snippets/redirect_https.conf
+          locations:
+            - pattern: /test_case_1_1
+              content: "# test code 1_1"
+            - pattern: "/test_case_1_2"
+              match_type: "~"
+              content: "# test code 1_2"
+          extra_setting: "# extra setting test 1 code"
+        - name: test_2
+          server_name:
+            - test2.exampe.com
+            - test-2.exampe.com
+          document_root: /var/www/html
+          index:
+            - test2.html
+            - test2.htm
+          includes:
+            - snippets/redirect_www.conf
+          locations:
+            - pattern: /test_case_2_1
+              content: "# test code 2_1"
+            - pattern: "/test_case_2_2"
+              match_type: "~"
+              content: "# test code 2_2"
+          extra_setting: "# extra setting test 2 code"
+        - name: test_3
+          server_name: test3.exampe.com
+          ssl:
+            protocols:
+              - TLSv1
+              - TLSv1.1
+              - TLSv1.2
+            ciphers:
+              - ECDHE-ECDSA-CHACHA20-POLY1305
+              - ECDHE-RSA-CHACHA20-POLY1305
+              - ECDHE-ECDSA-AES128-GCM-SHA256
+              - ECDHE-RSA-AES128-GCM-SHA256
+              - ECDHE-ECDSA-AES256-GCM-SHA384
+              - ECDHE-RSA-AES256-GCM-SHA384
+              - DHE-RSA-AES128-GCM-SHA256
+              - DHE-RSA-AES256-GCM-SHA384
+              - ECDHE-ECDSA-AES128-SHA256
+              - ECDHE-RSA-AES128-SHA256
+              - ECDHE-ECDSA-AES128-SHA
+              - ECDHE-RSA-AES256-SHA384
+              - ECDHE-RSA-AES128-SHA
+              - ECDHE-ECDSA-AES256-SHA384
+              - ECDHE-ECDSA-AES256-SHA
+              - ECDHE-RSA-AES256-SHA
+              - DHE-RSA-AES128-SHA256
+              - DHE-RSA-AES128-SHA
+              - DHE-RSA-AES256-SHA256
+              - DHE-RSA-AES256-SHA
+              - ECDHE-ECDSA-DES-CBC3-SHA
+              - ECDHE-RSA-DES-CBC3-SHA
+              - EDH-RSA-DES-CBC3-SHA
+              - AES128-GCM-SHA256
+              - AES256-GCM-SHA384
+              - AES128-SHA256
+              - AES256-SHA256
+              - AES128-SHA
+              - AES256-SHA
+              - DES-CBC3-SHA
+              - "!DSS"
+            prefer_server_ciphers: no
+            certificate: /path/to/cert.pem
+            certificate_key: /path/to/privkey.pem
+            trusted_certificate: /path/to/chain.pem
+            dhparam: /etc/nginx/dhparam.pem
+            session_timeout: "1d"
+            session_cache: "shared:SSL:50m"
+            session_tickets: no
+            hsts: "max-age=15768000; includeSubDomains;"
+            stapling: yes
+            stapling_verify: yes
+          state: no
 dependency:
   name: galaxy
 driver:

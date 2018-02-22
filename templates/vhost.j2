@@ -1,0 +1,114 @@
+# {{ ansible_managed }}
+{% if item.server_name is defined -%}
+# Virtual Host configuration for {{ item.server_name }}
+{% endif -%}
+server {
+    {% if item.ssl is undefined -%}
+    listen 80{{ ' default_server' if item.default|default(false) else ''  }};
+    listen [::]:80{{ ' default_server' if item.default|default(false) else ''  }};
+    {% else %}
+    listen 443 ssl http2{{ ' default_server' if item.default|default(false) else ''  }};
+    listen [::]:443 ssl http2{{ ' default_server' if item.default|default(false) else ''  }};
+    {% endif -%}
+
+    {% if item.variables is defined -%}
+    {% for var_name, var_value in item.variables.items() %}
+    set ${{ var_name }} "{{ var_value }}";
+    {% endfor -%}
+    {% endif -%}
+
+    {% if item.includes is defined -%}
+    {% for include_file in item.includes -%}
+    include {{ include_file }};
+    {% endfor -%}
+    {% endif -%}
+
+    {% if item.client_max_body_size is defined -%}
+    client_max_body_size {{ item.client_max_body_size }};
+    {% endif -%}
+
+    {% if item.server_name is defined -%}
+    server_name {{ item.server_name if item.server_name is string else item.server_name|join(' ') }};
+    {% endif -%}
+
+    {% if item.access_log is defined -%}
+    access_log {{ item.access_log }};
+    {% endif -%}
+    {% if item.error_log is defined -%}
+    error_log {{ item.error_log }};
+    {% endif -%}
+
+    {% if item.document_root is defined -%}
+    root {{ item.document_root }};
+    {% endif -%}
+
+    {% if item.index is defined -%}
+    index {{ item.index if item.index is string else item.index|join(' ') }};
+    {% endif -%}
+
+    {% if item.locations is defined -%}
+    {% for location in item.locations -%}
+    {% if location.comment is defined -%}
+    # {{ location.comment }}
+    {% endif -%}
+    location {{ location.match_type|default('') }} {{ location.pattern }} {
+        {{ location.content }}
+    }
+    {% endfor -%}
+    {% endif -%}
+
+    {% if item.ssl is defined -%}
+    ssl on;
+    # certs sent to the client in SERVER HELLO are concatenated in ssl_certificate
+    ssl_certificate {{ item.ssl.certificate }};
+    ssl_certificate_key {{ item.ssl.certificate_key }};
+
+    {% if item.ssl.trusted_certificate is defined -%}
+    ## verify chain of trust of OCSP response using Root CA and Intermediate certs
+    ssl_trusted_certificate {{ item.ssl.trusted_certificate }};
+    {% endif -%}
+
+    {% if item.ssl.protocols is defined -%}
+    ssl_protocols {{ item.ssl.protocols|join(' ') }};
+    {% endif -%}
+    {% if item.ssl.ciphers is defined -%}
+    ssl_ciphers "{{ item.ssl.ciphers|join(':') }}";
+    {% endif -%}
+    {% if item.ssl.prefer_server_ciphers is defined -%}
+    ssl_prefer_server_ciphers {{ 'on' if item.ssl.prefer_server_ciphers else 'off' }};
+    {% endif -%}
+
+    {% if item.ssl.session_timeout is defined -%}
+    ssl_session_timeout {{ item.ssl.session_timeout }};
+    {% endif -%}
+    {% if item.ssl.session_cache is defined -%}
+    ssl_session_cache {{ item.ssl.session_cache }};
+    {% endif -%}
+    {% if item.ssl.session_tickets is defined -%}
+    ssl_session_tickets {{ 'on' if item.ssl.session_tickets else 'off' }};
+    {% endif -%}
+
+    {% if item.ssl.dhparam is defined -%}
+    # Diffie-Hellman parameter for DHE ciphersuites, recommended 2048 bits
+    ssl_dhparam {{ item.ssl.dhparam }};
+    {% endif -%}
+
+    {% if item.ssl.hsts is defined -%}
+    # HSTS (ngx_http_headers_module is required)
+    add_header Strict-Transport-Security "{{ item.ssl.hsts }}";
+    {% endif -%}
+
+    {% if item.ssl.stapling is defined -%}
+    # OCSP Stapling ---
+    # fetch OCSP records from URL in ssl_certificate and cache them
+    ssl_stapling {{ 'on' if item.ssl.stapling  else 'off' }};
+    {% endif -%}
+    {% if item.ssl.stapling_verify is defined  -%}
+    ssl_stapling_verify {{ 'on' if item.ssl.stapling_verify else 'off' }};
+    {% endif -%}
+    {% endif -%}
+    {% if item.extra_setting is defined -%}
+    # Extra setting
+    {{ item.extra_setting }}
+    {% endif %}
+}

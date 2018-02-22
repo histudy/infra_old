@@ -1,0 +1,91 @@
+# {{ ansible_managed }}
+user {{ nginx_cfg.user }};
+worker_processes {{ nginx_cfg.worker_processes }};
+pid {{ nginx_cfg.pid }};
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+{% for key, value in nginx_cfg.events.items() %}
+    {{ key }} {{ value }};
+{% endfor %}
+}
+
+http {
+
+    ##
+    # Basic Settings
+    ##
+
+    sendfile {{ 'on' if nginx_cfg.http.sendfile else 'off' }};
+    tcp_nopush {{ 'on' if nginx_cfg.http.tcp_nopush else 'off' }};
+    tcp_nodelay {{ 'on' if nginx_cfg.http.tcp_nodelay else 'off' }};
+    keepalive_timeout {{ nginx_cfg.http.keepalive_timeout }};
+    types_hash_max_size {{ nginx_cfg.http.types_hash_max_size }};
+    {% if nginx_cfg.http.server_tokens is defined -%}
+    server_tokens {{ 'on' if nginx_cfg.http.server_tokens else 'off' }};
+    {% endif -%}
+
+    {% if nginx_cfg.http.server_names_hash_bucket_size is defined -%}
+    server_names_hash_bucket_size {{ nginx_cfg.http.server_names_hash_bucket_size }};
+    {% endif -%}
+    {% if nginx_cfg.http.server_name_in_redirect is defined -%}
+    server_name_in_redirect {{ 'on' if nginx_cfg.http.server_name_in_redirect else 'off' }};
+    {% endif -%}
+
+    include /etc/nginx/mime.types;
+
+    default_type {{ nginx_cfg.http.default_type }};
+
+    {% if nginx_cfg.http.client_max_body_size is defined -%}
+    client_max_body_size {{ nginx_cfg.http.client_max_body_size }};
+    {% endif -%}
+
+    ##
+    # Logging Settings
+    ##
+
+    access_log {{ nginx_cfg.http.access_log }};
+    error_log {{ nginx_cfg.http.error_log }};
+
+    ##
+    # SSL Settings
+    ##
+
+    ssl_protocols {{ nginx_cfg.http.ssl.protocols|join(' ') }};
+    ssl_ciphers "{{ nginx_cfg.http.ssl.ciphers|join(':') }}";
+    ssl_prefer_server_ciphers {{ 'on' if nginx_cfg.http.ssl.prefer_server_ciphers else 'off' }};
+    ssl_session_timeout {{ nginx_cfg.http.ssl.session_timeout }};
+    ssl_session_cache {{ nginx_cfg.http.ssl.session_cache }};
+    ssl_session_tickets {{ 'on' if nginx_cfg.http.ssl.session_tickets else 'off' }};
+    {% if nginx_cfg.http.ssl.dhparam is defined -%}
+    ssl_dhparam {{ nginx_cfg.http.ssl.dhparam }};
+    {% endif -%}
+    {% if nginx_cfg.http.ssl.hsts is defined -%}
+    add_header Strict-Transport-Security "{{ nginx_cfg.http.ssl.hsts }}";
+    {% endif -%}
+    ssl_stapling {{ 'on' if nginx_cfg.http.ssl.stapling else 'off' }};
+    ssl_stapling_verify {{ 'on' if nginx_cfg.http.ssl.stapling_verify else 'off' }};
+
+    ##
+    # Gzip Settings
+    ##
+
+    gzip {{ 'on' if nginx_cfg.http.gzip else 'off' }};
+    gzip_vary {{ 'on' if nginx_cfg.http.gzip_vary else 'off' }};
+    gzip_proxied {{ nginx_cfg.http.gzip_proxied }};
+    gzip_comp_level {{ nginx_cfg.http.gzip_comp_level }};
+    gzip_buffers {{ nginx_cfg.http.gzip_buffers }};
+    gzip_http_version {{ nginx_cfg.http.gzip_http_version }};
+    gzip_types {{ nginx_cfg.http.gzip_types|join(' ') }};
+
+    ##
+    # Virtual Host Configs
+    ##
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
+
+{% if nginx_cfg.extra_setting is defined -%}
+{{ nginx_cfg.extra_setting }}
+{% endif %}

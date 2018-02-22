@@ -2,3 +2,11 @@
 - hosts: all
   roles:
     - role: nginx
+  tasks:
+    - name: remove default setting file
+      file:
+        path: "/etc/nginx/{{ item }}/default"
+        state: absent
+      with_items:
+        - sites-available
+        - sites-enabled
