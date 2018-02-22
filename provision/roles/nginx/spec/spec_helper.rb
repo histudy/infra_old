@@ -12,6 +12,10 @@ set :backend, :ssh
 set :host, host
 set :ssh_options, options
 
+def e(value)
+  Regexp.escape(value.is_a?(String) ? value : value.to_s)
+end
+
 spec_dir = File.dirname(__FILE__)
 role_dir = File.dirname(spec_dir)
 
