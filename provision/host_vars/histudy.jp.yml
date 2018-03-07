@@ -31,6 +31,8 @@ nginx_vhosts:
     access_log: /var/log/nginx/access.log
     error_log: /var/log/nginx/error.log
     document_root: /var/www/html
+    includes:
+      - conf.d/security.conf
     index:
       - index.html
       - index.htm
@@ -47,4 +49,5 @@ nginx_vhosts:
   - name: default_non_ssl
     server_name: "{{ domain }}"
     includes:
+      - conf.d/security.conf
       - snippets/redirect_https.conf
