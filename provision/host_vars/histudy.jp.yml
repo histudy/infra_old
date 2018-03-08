@@ -24,6 +24,8 @@ nginx_cfg:
     ssl:
       dhparam: "{{ nginx_dh_key_path }}"
 
+scp_header_value: "default-src 'self' 'unsafe-inline' https://www.google-analytics.com https://www.googletagmanager.com"
+
 nginx_vhosts:
   - name: default
     default: yes
@@ -31,6 +33,9 @@ nginx_vhosts:
     access_log: /var/log/nginx/access.log
     error_log: /var/log/nginx/error.log
     document_root: /var/www/html
+    add_headers:
+      - name: Content-Security-Policy
+        value: '"{{ scp_header_value }}" always'
     includes:
       - conf.d/security.conf
     index:
@@ -48,6 +53,9 @@ nginx_vhosts:
       stapling_verify: yes
   - name: default_non_ssl
     server_name: "{{ domain }}"
+    add_headers:
+      - name: Content-Security-Policy
+        value: '"{{ scp_header_value }}" always'
     includes:
       - conf.d/security.conf
       - snippets/redirect_https.conf
