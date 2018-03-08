@@ -32,6 +32,12 @@ property['common_packages'].each do |pkg|
   end
 end
 
+%w[python-apt aptitude].each do |pkg|
+  describe package(pkg) do
+    it { should be_installed }
+  end
+end
+
 describe package('ufw') do
   it { should be_installed }
 end

@@ -1,7 +1,10 @@
 ---
-- name: install aptitude package
+- name: install dependency packages
   apt:
-    name: aptitude
+    name: "{{ item }}"
+  with_items:
+    - python-apt
+    - aptitude
 - name: set hostname
   hostname:
     name: "{{ common_hostname }}"
