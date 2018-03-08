@@ -12,7 +12,7 @@ server {
     {% endif -%}
 
     {% if item.variables is defined -%}
-    {% for var_name, var_value in item.variables.items() %}
+    {% for var_name, var_value in item.variables.items() -%}
     set ${{ var_name }} "{{ var_value }}";
     {% endfor -%}
     {% endif -%}
@@ -44,6 +44,12 @@ server {
 
     {% if item.index is defined -%}
     index {{ item.index if item.index is string else item.index|join(' ') }};
+    {% endif -%}
+
+    {% if item.add_headers is defined -%}
+    {% for add_header in item.add_headers -%}
+    add_header {{ add_header.name }} {{ add_header.value }};
+    {% endfor -%}
     {% endif -%}
 
     {% if item.locations is defined -%}

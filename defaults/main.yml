@@ -12,6 +12,13 @@ nginx_vhosts: []
 #       access_log: /var/log/nginx/access.log
 #       error_log: /var/log/nginx/error.log
 #       document_root: /var/www/html
+#       add_headers:
+#         - name: X-Content-Type-Options
+#           value: nosniff
+#         - name: X-Frame-Options
+#           value: SAMEORIGIN
+#         - name: X-XSS-Protection
+#           value: '"1; mode=block"'
 #       locations:
 #         - pattern: "/\\.ht"
 #           match_type: "~"
