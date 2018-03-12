@@ -2,15 +2,20 @@
   "variables": {
     "vagrantcloud_user": "histudy",
     "vagrantcloud_name": "stretch",
-    "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
+    "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
+    "debian_version_major": "9",
+    "debian_version_minor": "4",
+    "debian_version_patch": "0",
+    "iso_checksum_type": "sha1",
+    "iso_checksum": "da34180d8f618a6a311fe31fb08508496eb91601"
   },
   "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "Debian_64",
     "disk_size": 20480,
-    "iso_url": "http://cdimage.debian.org/debian-cd/9.3.0/amd64/iso-cd/debian-9.3.0-amd64-netinst.iso",
-    "iso_checksum_type": "sha1",
-    "iso_checksum": "0dab4812fd1bb959e506d7ff6096bc9cb04d824a",
+    "iso_url": "http://cdimage.debian.org/debian-cd/{{user `debian_version_major`}}.{{user `debian_version_minor`}}.{{user `debian_version_patch`}}/amd64/iso-cd/debian-{{user `debian_version_major`}}.{{user `debian_version_minor`}}.{{user `debian_version_patch`}}-amd64-netinst.iso",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_checksum": "{{user `iso_checksum`}}",
     "http_directory": "http",
     "boot_wait": "5s",
     "boot_command": [
@@ -48,8 +53,8 @@
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "{{user `vagrantcloud_user`}}/{{user `vagrantcloud_name`}}",
-        "version": "0.0.0",
-        "version_description": "Debian 9.3(64bit)日本語環境用"
+        "version": "{{user `debian_version_major`}}.{{user `debian_version_minor`}}.{{user `debian_version_patch`}}",
+        "version_description": "Debian {{user `debian_version_major`}}.{{user `debian_version_minor`}} (64bit)日本語環境用"
       }
     ]
   ]
