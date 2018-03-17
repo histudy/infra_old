@@ -114,7 +114,6 @@ describe file('/etc/nginx/nginx.conf') do
   gzip_types_value = e(property['nginx_cfg']['http']['gzip_types'].join(' '))
   its(:content) { should match(/^\s*gzip_types #{gzip_types_value};$/) }
 
-  its(:content) { should match(/^\s*# nginx.conf extra setting$/) }
 end
 
 %w[redirect_https.conf redirect_www.conf wordpress.conf].each do |snippet|
