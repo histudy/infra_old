@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io/
 
 ### Packer ###
-### 
+###
 # Cache objects
 packer_cache/
 
@@ -23,3 +23,5 @@ packer_cache/
 
 ### direnv
 .envrc
+
+facts/

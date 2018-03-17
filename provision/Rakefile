@@ -1,27 +1,84 @@
 require 'rake'
 require 'rspec/core/rake_task'
+require 'yaml'
 
 task :spec    => 'spec:all'
 task :default => :spec
 
 namespace :spec do
-  targets = []
-  Dir.glob('./spec/*').each do |dir|
-    next unless File.directory?(dir)
-    target = File.basename(dir)
-    target = "_#{target}" if target == "default"
-    targets << target
-  end
+  inventory = YAML.load(`ansible-inventory --list`)
+  targets = inventory['_meta']['hostvars'].keys
+
+  inventory = YAML.load(`ansible-inventory --list`)
 
   task :all     => targets
   task :default => :all
 
   targets.each do |target|
-    original_target = target == "_default" ? target[1..-1] : target
-    desc "Run serverspec tests to #{original_target}"
+    desc "Run serverspec tests to #{target}"
     RSpec::Core::RakeTask.new(target.to_sym) do |t|
-      ENV['TARGET_HOST'] = original_target
-      t.pattern = "spec/#{original_target}/*_spec.rb"
+      ENV['TARGET_HOST'] = target
+      `ansible -m debug -a 'var=vars' --tree facts #{target}`
+      role_paths = get_role_paths()
+      role_names = get_execute_roles(target, 'playbook.yml', role_paths)
+      ENV['ROLE_PATHS'] = role_paths.join(',')
+      ENV['ROLE_NAMES'] = role_names.join(',')
+      spec_patters = get_find_patterns(role_paths, role_names, 'spec/*_spec.rb')
+      spec_patters << "./spec/#{target}/*_spec.rb"
+      t.pattern = spec_patters
     end
   end
+end
+
+def get_execute_roles(target_host, playbook_path, role_paths)
+  play_hosts_values = get_play_hosts_values(target_host)
+  target_roles = get_play_roles('playbook.yml', play_hosts_values)
+  find_meta_file_patterns = get_find_patterns(role_paths, target_roles, 'meta/main.yml')
+  meta_files = Dir.glob(find_meta_file_patterns)
+  meta_files.each do |meta_file|
+    role_meta = YAML.load_file(meta_file)
+    if role_meta.key?('dependencies') && !role_meta['dependencies'].empty?
+      role_meta['dependencies'].each do |role|
+        role_name = role
+        role_name = role['role'] if role.is_a?(Hash)
+        target_roles << role_name
+      end
+    end
+  end
+  return target_roles.uniq
+end
+
+def get_find_patterns(paths, rules, suffix='')
+  find_patterns = []
+  paths.each do |path|
+    find_patterns << path + '/{' + rules.join(',') + '}/' + suffix
+  end
+  return find_patterns
+end
+def get_play_hosts_values(target_host)
+  play_hosts_values = YAML.load_file('facts/' + target_host)['vars']['group_names']
+  play_hosts_values.unshift('all')
+  play_hosts_values << target_host
+end
+
+def get_play_roles(playbook_path, play_hosts_values)
+  target_roles = []
+  playbook = YAML.load_file(playbook_path)
+  playbook.each do |play|
+    if play_hosts_values.include?(play['hosts']) && play.key?('roles')
+      play['roles'].each do |role|
+        role_name = role
+        role_name = role['role'] if role.is_a?(Hash)
+        target_roles << role_name
+      end
+    end
+  end
+  return target_roles
+end
+
+def get_role_paths()
+  result = `ansible-config dump | grep DEFAULT_ROLES_PATH`.strip
+  role_paths = result.split(' = ')[1][1..-2].split(', ').map{ |item| item[2..-2] }
+  role_paths << './roles'
+  return role_paths
 end
