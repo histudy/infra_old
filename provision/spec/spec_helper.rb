@@ -1,28 +1,12 @@
 require 'serverspec'
 require 'net/ssh'
 require 'yaml'
+require 'deep_merge'
 
 set :backend, :ssh
 
 def e(value)
   Regexp.escape(value.is_a?(String) ? value : value.to_s)
-end
-
-class ::Hash
-  def deep_merge(other_hash, &block)
-    dup.deep_merge!(other_hash, &block)
-  end
-  def deep_merge!(other_hash, &block)
-    other_hash.each_pair do |k, v|
-      tv = self[k]
-      if tv.is_a?(Hash) && v.is_a?(Hash)
-        self[k] = tv.deep_merge(v, &block)
-      else
-        self[k] = block && tv ? block.call(k, tv, v) : v
-      end
-    end
-    self
-  end
 end
 
 host = ENV['TARGET_HOST']
@@ -47,17 +31,17 @@ end
 variable_files = Dir.glob(find_file_patterns)
 variable_files.each do |role_default_variable_file|
   role_default_vars = YAML.load_file(role_default_variable_file)
-  ansible_vars.deep_merge!(role_default_vars) if role_default_vars.is_a?(Hash)
+  ansible_vars.deep_merge!(role_default_vars, {:overwrite_arrays => true}) if role_default_vars.is_a?(Hash)
 end
 
 trim_string = host + ' | SUCCESS => '
 dump = `ansible -m setup #{host}`
 dump.slice!(0, trim_string.length)
-ansible_vars.deep_merge!(YAML.load(dump)['ansible_facts'])
+ansible_vars.deep_merge!(YAML.load(dump)['ansible_facts'], {:overwrite_arrays => true})
 
 dump = `ansible -m debug -a 'var=vars' #{host}`
 dump.slice!(0, trim_string.length)
-ansible_vars.deep_merge!(YAML.load(dump))
+ansible_vars.deep_merge!(YAML.load(dump)['vars'], {:overwrite_arrays => true})
 
 find_file_patterns = []
 role_paths.each do |role_path|
@@ -66,7 +50,7 @@ end
 variable_files = Dir.glob(find_file_patterns)
 variable_files.each do |role_variable_file|
   role_vars = YAML.load_file(role_variable_file)
-  ansible_vars.deep_merge!(role_vars) if role_vars.is_a?(Hash)
+  ansible_vars.deep_merge!(role_vars, {:overwrite_arrays => true}) if role_vars.is_a?(Hash)
 end
 
 set_property ansible_vars
