@@ -36,7 +36,16 @@ nginx_vhosts:
     index:
       - index.html
       - index.htm
+      - index.php
     locations:
+      - pattern: /
+        content: |
+          try_files $uri $uri/ /index.php?$query_string;
+      - pattern: "\\.php"
+        match_type: "~"
+        content: |
+          fastcgi_pass unix:/var/run/php/php{{ php_default_version }}-fpm.sock;
+          include snippets/fastcgi-php.conf;
       - pattern: "/\\.ht"
         match_type: "~"
         content: "deny all;"
@@ -51,3 +60,20 @@ nginx_vhosts:
     includes:
       - conf.d/security.conf
       - snippets/redirect_https.conf
+  - name: status
+    server_name: localhost
+    listen: 8080
+    access_log: 'off'
+    locations:
+      - pattern: /nginx_status
+        content: |
+          stub_status on;
+          allow 127.0.0.1;
+          deny all;
+
+mackerel_agent_install_agent_plugins: yes
+
+mackerel_agent_cfg:
+  plugin:
+    metrics:
+      nginx: /usr/bin/mackerel-plugin-nginx
