@@ -1,0 +1,50 @@
+---
+- name: install PHP
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ php_packages }}"
+- name: set cli php.ini template variable
+  set_fact:
+    php_cfg: "{{ php_ini_cli_cfg }}"
+- name: create php.ini(cli) file
+  template:
+    src: php.ini.j2
+    dest: "{{ php_ini_dir }}/cli/php.ini"
+- name: check php-fpm config directory
+  stat:
+    path: "{{ php_ini_dir }}/fpm"
+  register: result
+- block:
+  - name: set cli php.ini template variable
+    set_fact:
+      php_cfg: "{{ php_ini_fpm_cfg }}"
+  - name: create php.ini(php-fpm) file
+    template:
+      src: php.ini.j2
+      dest: "{{ php_ini_dir }}/fpm/php.ini"
+    notify: restart php-fpm
+  when: result.stat.exists
+- name: check mod_php config directory
+  stat:
+    path: "{{ php_ini_dir }}/apache2"
+  register: result
+- block:
+  - name: set cli php.ini template variable
+    set_fact:
+      php_cfg: "{{ php_ini_apache2_cfg }}"
+  - name: create php.ini(mod_php) file
+    template:
+      src: php.ini.j2
+      dest: "{{ php_ini_dir }}/apache2/php.ini"
+  when: result.stat.exists
+- name: install composer
+  apt:
+    name: composer
+  when: php_composer_install
+- block:
+  - name: php-fpm is active and enable on system startup
+    service:
+      name: "{{ php_fpm_service_name }}"
+      state: started
+      enabled: yes
+  when: "php_fpm_package_name in php_packages"
