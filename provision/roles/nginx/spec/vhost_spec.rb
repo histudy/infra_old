@@ -109,12 +109,3 @@ property['nginx_vhosts'].each do |vhosts_cfg|
     end
   end
 end
-
-# server {
-#
-#     {% endif -%}
-#     {% if item.extra_setting is defined -%}
-#     # Extra setting
-#     {{ item.extra_setting }}
-#     {% endif %}
-# }
