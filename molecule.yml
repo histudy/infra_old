@@ -62,17 +62,28 @@ ansible:
       nginx_vhosts:
         - name: test_1
           default: yes
-          server_name: "test1.exampe.com test-1.exampe.com"
+          server_name:
+            - test1.exampe.com
+            - test-1.exampe.com
           access_log: /var/log/nginx/access.log
           error_log: /var/log/nginx/error.log
           document_root: /var/www/html
+          client_max_body_size: 16M
           variables:
             var1_name: var1_value
             var2_name: var2_value
-          client_max_body_size: 16M
-          index: "test1.html test1.htm"
+          index:
+            - test1.html
+            - test1.htm
           includes:
             - snippets/redirect_https.conf
+          add_headers:
+            - name: X-Content-Type-Options
+              value: nosniff
+            - name: X-Frame-Options
+              value: SAMEORIGIN
+            - name: X-XSS-Protection
+              value: '"1; mode=block"'
           locations:
             - pattern: /test_case_1_1
               content: "# test code 1_1"
@@ -81,13 +92,9 @@ ansible:
               content: "# test code 1_2"
           extra_setting: "# extra setting test 1 code"
         - name: test_2
-          server_name:
-            - test2.exampe.com
-            - test-2.exampe.com
+          server_name: "test2.exampe.com test-2.exampe.com"
           document_root: /var/www/html
-          index:
-            - test2.html
-            - test2.htm
+          index: "test2.html test2.htm"
           includes:
             - snippets/redirect_www.conf
           locations:
@@ -148,6 +155,17 @@ ansible:
             stapling: yes
             stapling_verify: yes
           state: no
+        - name: test_4
+          listen: 8080
+          server_name: localhost
+          locations:
+            - pattern: /status
+              content: |
+                stub_status on;
+                access_log off;
+                allow 127.0.0.1;
+                deny all;
+
 dependency:
   name: galaxy
 driver:
@@ -165,6 +183,6 @@ vagrant:
   instances:
     - name: nginx
       ansible_groups:
-        - default
+        - molecule
 verifier:
   name: serverspec
