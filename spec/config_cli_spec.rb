@@ -1,5 +1,14 @@
 require 'spec_helper'
 
+def to_ini_value(value)
+  return '' if value.nil?
+  if !!value === value
+    return value ? 'On' : 'Off'
+  end
+  escape_value = value.is_a?(String) ? value : value.to_s
+  Regexp.escape(escape_value)
+end
+
 describe file(property['php_ini_dir'] + '/cli/php.ini') do
   php_ini = property['php_ini_cli_cfg']
   # Core

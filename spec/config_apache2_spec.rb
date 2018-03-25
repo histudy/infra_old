@@ -1,5 +1,14 @@
 require 'spec_helper'
-# libapache2-mod-php7.2
+
+def to_ini_value(value)
+  return '' if value.nil?
+  if !!value === value
+    return value ? 'On' : 'Off'
+  end
+  escape_value = value.is_a?(String) ? value : value.to_s
+  Regexp.escape(escape_value)
+end
+
 if property['php_packages'].include?('libapache2-mod-php' + property['php_default_version'])
   describe file(property['php_ini_dir'] + '/apache2/php.ini') do
     php_ini = property['php_ini_apache2_cfg']

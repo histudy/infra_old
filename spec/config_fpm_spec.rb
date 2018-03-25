@@ -1,5 +1,14 @@
 require 'spec_helper'
 
+def to_ini_value(value)
+  return '' if value.nil?
+  if !!value === value
+    return value ? 'On' : 'Off'
+  end
+  escape_value = value.is_a?(String) ? value : value.to_s
+  Regexp.escape(escape_value)
+end
+
 if property['php_packages'].include?(property['php_fpm_package_name'])
   describe file(property['php_ini_dir'] + '/fpm/php.ini') do
     php_ini = property['php_ini_fpm_cfg']

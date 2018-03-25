@@ -6,12 +6,12 @@ Style/ConditionalAssignment:
 Performance/RedundantBlockCall:
   Exclude:
     - spec/spec_helper.rb
+
 Style/DoubleNegation:
-  Exclude:
-    - spec/spec_helper.rb
+  Enabled: false
+
 Style/CaseEquality:
-  Exclude:
-    - spec/spec_helper.rb
+  Enabled: false
 
 Metrics/LineLength:
   Max: 200
