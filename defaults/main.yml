@@ -1,0 +1,438 @@
+---
+php_default_version: "7.0"
+
+php_packages:
+  - php{{ php_default_version }}-common
+  - php{{ php_default_version }}-json
+  - php{{ php_default_version }}-opcache
+  - php{{ php_default_version }}-readline
+  - php{{ php_default_version }}-cli
+  - php{{ php_default_version }}-dev
+  - php{{ php_default_version }}-curl
+  - php{{ php_default_version }}-mbstring
+  - php{{ php_default_version }}-sqlite3
+  - php{{ php_default_version }}-gd
+  - php{{ php_default_version }}-mysql
+  - php{{ php_default_version }}-xml
+  - php{{ php_default_version }}-bz2
+  - php{{ php_default_version }}-zip
+  - php{{ php_default_version }}-fpm
+
+php_fpm_package_name: php{{ php_default_version }}-fpm
+php_fpm_service_name: php{{ php_default_version }}-fpm
+php_ini_dir: /etc/php/{{ php_default_version }}
+
+php_composer_install: yes
+
+php_common_cfg: &common
+  #################
+  # php.ini Options
+  #################
+  # user_ini:
+  #   filename: ".user.ini"
+  #   cache_ttl: 300
+  #################
+  # Language Options
+  #################
+  engine: yes
+  short_open_tag: no
+  precision: 14
+  output_buffering: 4096
+  # output_handler: ""
+  zlib:
+    output_compression: no
+    # output_compression_level: -1
+    # output_handler: ""
+  implicit_flush: no
+  unserialize_callback_func: ""
+  serialize_precision: 17
+  # open_basedir: ""
+  disable_classes: ""
+  # highlight:
+  #   string: #DD0000
+  #   comment: #FF9900
+  #   keyword: #007700
+  #   default: #0000BB
+  #   html: #000000
+  # ignore_user_abort: yes
+  # realpath_cache_size: 16k
+  # realpath_cache_ttl: 120
+  zend:
+    enable_gc: yes
+    # multibyte: no
+    # script_encoding: ""
+    assertions: -1
+  #################
+  # Resource Limits
+  #################
+  max_execution_time: 30
+  max_input_time: 60
+  # max_input_nesting_level: 64
+  # max_input_vars: 1000
+  # memory_limit: 128M
+  #################
+  # Error handling and logging
+  #################
+  error_reporting: E_ALL & ~E_DEPRECATED & ~E_STRICT
+  display_errors: no
+  display_startup_errors: no
+  log_errors: yes
+  log_errors_max_len: 1024
+  ignore_repeated_errors: no
+  ignore_repeated_source: no
+  report_memleaks: yes
+  # report_zend_debug: 0
+  track_errors: no
+  # xmlrpc_errors: 0
+  # xmlrpc_error_number: 0
+  html_errors: yes
+  # docref_root: /phpmanual/
+  # docref_ext: .html
+  # error_prepend_string: "<span style='color: #ff0000'>"
+  # error_append_string: "</span>"
+  # error_log: ""
+  #################
+  # Data Handling
+  #################
+  # arg_separator:
+  #   output: "&amp;"
+  #   input: ";&"
+  variables_order: "GPCS"
+  request_order: "GP"
+  register_argc_argv: no
+  auto_globals_jit: yes
+  # enable_post_data_reading: no
+  post_max_size: 8M
+  auto_prepend_file: ""
+  auto_append_file: ""
+  default_mimetype: "text/html"
+  default_charset: "UTF-8"
+  # internal_encoding: ""
+  # input_encoding: ""
+  # output_encoding: ""
+  #################
+  # Paths and Directories
+  #################
+  # include_path: ".:/php/includes"
+  doc_root: ""
+  user_dir: ""
+  # extension_dir: "./"
+  # sys_temp_dir: "/tmp"
+  enable_dl: no
+  # cgi:
+  #   force_redirect: 1
+  #   nph: 1
+  #   redirect_status_env: ""
+  #   fix_pathinfo: 1
+  #   discard_path: 1
+  #   rfc2616_headers: 0
+  #   check_shebang_line: 1
+  # fastcgi:
+  #   impersonate: 1
+  #   logging: 0
+  #################
+  # File Uploads
+  #################
+  file_uploads: yes
+  # upload_tmp_dir: ""
+  upload_max_filesize: 2M
+  max_file_uploads: 20
+  #################
+  # Fopen wrappers
+  #################
+  allow_url_fopen: yes
+  allow_url_include: no
+  # from: "john@doe.com"
+  # user_agent: PHP
+  default_socket_timeout: 60
+  # auto_detect_line_endings: no
+  #################
+  # Module Settings
+  #################
+  cli_server:
+    color: yes
+  date:
+    timezone: Asia/Tokyo
+    # default_latitude: 31.7667
+    # default_longitude: 35.2333
+    # sunrise_zenith: 90.583333
+    # sunset_zenith: 90.583333
+  # filter:
+  #   default: unsafe_raw
+  #   default_flags: ""
+  # iconv:
+  #   input_encoding: ""
+  #   internal_encoding: ""
+  #   output_encoding: ""
+  # intl:
+  #   default_locale: ""
+  #   error_level: E_WARNING
+  #   use_exceptions: 0
+  # sqlite3:
+  #   extension_dir: ""
+  # pcre:
+  #   backtrack_limit: 100000
+  #   recursion_limit: 100000
+  #   jit: 1
+  # pdo_odbc:
+  #   connection_pooling: strict
+  #   db2_instance_name: ""
+  pdo_mysql:
+    cache_size: 2000
+    default_socket: ""
+  # phar:
+  #   readonly: yes
+  #   require_hash: yes
+  #   cache_list: ""
+  # sendmail_path: ""
+  mail:
+    # force_extra_parameters: ""
+    add_x_header: yes
+    # log: ""
+  sql:
+    safe_mode: no
+  odbc:
+    # default_db: ""
+    # default_user: ""
+    # default_pw: ""
+    # default_cursortype: ""
+    allow_persistent: yes
+    check_persistent: yes
+    max_persistent: -1
+    max_links: -1
+    defaultlrl: 4096
+    defaultbinmode: 1
+  # birdstep:
+  #   max_links: -1
+  ibase:
+    allow_persistent: 1
+    max_persistent: -1
+    max_links: -1
+    # default_db: ""
+    # default_user: ""
+    # default_password: ""
+    # default_charset: ""
+    timestampformat: "%Y-%m-%d %H:%M:%S"
+    dateformat: "%Y-%m-%d"
+    timeformat: "%H:%M:%S"
+  mysqli:
+    max_persistent: -1
+    # allow_local_infile: yes
+    allow_persistent: yes
+    max_links: -1
+    cache_size: 2000
+    default_port: 3306
+    default_socket: ""
+    default_host: ""
+    default_user: ""
+    default_pw: ""
+    reconnect: no
+  mysqlnd:
+    collect_statistics: yes
+    collect_memory_statistics: no
+    # debug:
+    # log_mask: 0
+    # mempool_default_size: 16000
+    # net_cmd_buffer_size: 2048
+    # net_read_buffer_size: 32768
+    # net_read_timeout: 31536000
+    # sha256_server_public_key:
+  # oci8:
+  #   privileged_connect: no
+  #   max_persistent: -1
+  #   persistent_timeout: -1
+  #   ping_interval: 60
+  #   connection_class: ""
+  #   events: no
+  #   statement_cache_size: 20
+  #   default_prefetch: 100
+  #   old_oci_close_semantics: no
+  pgsql:
+    allow_persistent: yes
+    auto_reset_persistent: no
+    max_persistent: -1
+    max_links: -1
+    ignore_notice: 0
+    log_notice: 0
+  bcmath:
+    scale: 0
+  # browscap: extra/browscap.ini
+  session:
+    save_handler: files
+    # save_path: /var/lib/php/sessions
+    use_strict_mode: no
+    use_cookies: yes
+    # cookie_secure: no
+    use_only_cookies: yes
+    name: PHPSESSID
+    auto_start: no
+    cookie_lifetime: 0
+    cookie_path: /
+    cookie_domain: ""
+    cookie_httponly: no
+    serialize_handler: php
+    gc_probability: 0
+    gc_divisor: 1000
+    gc_maxlifetime: 1440
+    referer_check: ""
+    # entropy_length: 32
+    # entropy_file: /dev/urandom
+    cache_limiter: nocache
+    cache_expire: 180
+    use_trans_sid: no
+    hash_function: 0
+    hash_bits_per_character: 5
+    # upload_progress:
+    #   enabled: yes
+    #   cleanup: yes
+    #   prefix: upload_progress_
+    #   name: PHP_SESSION_UPLOAD_PROGRESS
+    #   freq:  1%
+    #   min_freq: 1
+    # lazy_write: yes
+  url_rewriter:
+    tags: "a=href,area=href,frame=src,input=src,form=fakeentry"
+  # assert:
+  #   active: yes
+  #   exception: yes
+  #   warning: yes
+  #   bail: no
+  #   callback: 0
+  #   quiet_eval: 0
+  # mbstring:
+  #   language: Japanese
+  #   internal_encoding: ""
+  #   http_input: ""
+  #   http_output: ""
+  #   encoding_translation: no
+  #   detect_order: auto
+  #   substitute_character: none
+  #   func_overload: 0
+  #   strict_detection: yes
+  #   http_output_conv_mimetype: ""
+  # gd:
+  #   jpeg_ignore_warning: 0
+  # exif:
+  #   encode_unicode: ISO-8859-15
+  #   decode_unicode_motorola: UCS-2BE
+  #   decode_unicode_intel: UCS-2LE
+  #   encode_jis: ""
+  #   decode_jis_motorola: JIS
+  #   decode_jis_intel: JIS
+  tidy:
+    # default_config: /usr/local/lib/php/default.tcfg
+    clean_output: no
+  soap:
+    wsdl_cache_enabled: 1
+    wsdl_cache_dir: /tmp
+    wsdl_cache_ttl: 86400
+    wsdl_cache_limit: 5
+  # sysvshm:
+  #   init_mem: 10000
+  ldap:
+    max_links: -1
+  # mcrypt:
+  #   algorithms_dir: ""
+  #   modes_dir: ""
+  # dba:
+  #   default_handler: ""
+  # opcache:
+  #   enable: yes
+  #   enable_cli: no
+  #   memory_consumption: 64
+  #   interned_strings_buffer: 4
+  #   max_accelerated_files: 2000
+  #   max_wasted_percentage: 5
+  #   use_cwd: yes
+  #   validate_timestamps: yes
+  #   revalidate_freq: 2
+  #   revalidate_path: no
+  #   save_comments: 1
+  #   fast_shutdown: 0
+  #   enable_file_override: no
+  #   optimization_level: "0xffffffff"
+  #   inherited_hack: yes
+  #   dups_fix: no
+  #   blacklist_filename: ""
+  #   max_file_size: 0
+  #   consistency_checks: 0
+  #   force_restart_timeout: 180
+  #   error_log: ""
+  #   log_verbosity_level: 1
+  #   preferred_memory_model: ""
+  #   protect_memory: 0
+  #   file_update_protection: 2
+  #   restrict_api: ""
+  #   mmap_base:
+  #   file_cache:
+  #   file_cache_only: 0
+  #   file_cache_consistency_checks: 1
+  #   file_cache_fallback: 1
+  #   huge_code_pages: 1
+  #   validate_permission: 0
+  #   validate_root: 0
+  # curl:
+  #   cainfo: ""
+  # openssl:
+  #   cafile: ""
+  #   capath: ""
+  # extra_setting: ""
+
+php_ini_cli_cfg:
+  <<: *common
+  disable_functions: []
+  expose_php: yes
+  memory_limit: -1
+php_ini_fpm_cfg:
+  <<: *common
+  disable_functions:
+    - pcntl_alarm
+    - pcntl_fork
+    - pcntl_waitpid
+    - pcntl_wait
+    - pcntl_wifexited
+    - pcntl_wifstopped
+    - pcntl_wifsignaled
+    - pcntl_wifcontinued
+    - pcntl_wexitstatus
+    - pcntl_wtermsig
+    - pcntl_wstopsig
+    - pcntl_signal
+    - pcntl_signal_dispatch
+    - pcntl_get_last_error
+    - pcntl_strerror
+    - pcntl_sigprocmask
+    - pcntl_sigwaitinfo
+    - pcntl_sigtimedwait
+    - pcntl_exec
+    - pcntl_getpriority
+    - pcntl_setpriority
+  expose_php: no
+  memory_limit: 128M
+php_ini_apache2_cfg:
+  <<: *common
+  disable_functions:
+    - pcntl_alarm
+    - pcntl_fork
+    - pcntl_waitpid
+    - pcntl_wait
+    - pcntl_wifexited
+    - pcntl_wifstopped
+    - pcntl_wifsignaled
+    - pcntl_wexitstatus
+    - pcntl_wtermsig
+    - pcntl_wstopsig
+    - pcntl_signal
+    # - pcntl_signal_get_handler
+    - pcntl_signal_dispatch
+    - pcntl_get_last_error
+    - pcntl_strerror
+    - pcntl_sigprocmask
+    - pcntl_sigwaitinfo
+    - pcntl_sigtimedwait
+    - pcntl_exec
+    - pcntl_getpriority
+    - pcntl_setpriority
+    # - pcntl_async_signals
+  expose_php: no
+  memory_limit: 128M

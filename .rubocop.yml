@@ -1,0 +1,28 @@
+Style/ClassAndModuleChildren:
+  Exclude:
+    - spec/spec_helper.rb
+Style/ConditionalAssignment:
+  Enabled: false
+Performance/RedundantBlockCall:
+  Exclude:
+    - spec/spec_helper.rb
+Style/DoubleNegation:
+  Exclude:
+    - spec/spec_helper.rb
+Style/CaseEquality:
+  Exclude:
+    - spec/spec_helper.rb
+
+Metrics/LineLength:
+  Max: 200
+  AllowHeredoc: true
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+  IgnoreCopDirectives: false
+  IgnoredPatterns: []
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

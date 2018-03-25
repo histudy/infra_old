@@ -1,0 +1,44 @@
+---
+ansible:
+  group_vars:
+    all:
+      php_default_version: "7.0"
+      php_packages:
+        - php7.0-common
+        - php7.0-json
+        - php7.0-opcache
+        - php7.0-readline
+        - php7.0-cli
+        - php7.0-dev
+        - php7.0-curl
+        - php7.0-mbstring
+        - php7.0-sqlite3
+        - php7.0-gd
+        - php7.0-mysql
+        - php7.0-xml
+        - php7.0-bz2
+        - php7.0-zip
+        - php7.0-fpm
+      php_fpm_package_name: php7.0-fpm
+      php_fpm_service_name: php7.0-fpm
+      php_ini_dir: /etc/php/7.0
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+vagrant:
+  platforms:
+    - name: stretch
+      box: histudy/stretch
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 1
+  instances:
+    - name: php
+      ansible_groups:
+        - default
+verifier:
+  name: serverspec
