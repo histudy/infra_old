@@ -1,1 +1,2 @@
-%adm ALL=(ALL) {% if not common_requre_sudo_password %}NOPASSWD:{% endif %}ALL
+# {{ ansible_managed }}
+%adm ALL=(ALL:ALL) {{ 'ALL' if common_requre_sudo_password else 'NOPASSWD:ALL' }}
