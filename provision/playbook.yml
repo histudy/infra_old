@@ -7,13 +7,26 @@
         update_cache: yes
         autoremove: yes
   roles:
-    - dev-sec.os-hardening
-    - dev-sec.ssh-hardening
-    - common
-    - mackerel-agent
-    - lexicon
-    - dehydrated
-    - nginx
+    - role: dev-sec.os-hardening
+      tags:
+        - role_dev-sec
+        - role_dev-sec-os
+    - role: dev-sec.ssh-hardening
+      tags:
+        - role_dev-sec
+        - role_dev-sec-ssh
+    - role: common
+      tags: role_common
+    - role: mackerel-agent
+      tags: role_mackerel-agent
+    - role: lexicon
+      tags: role_lexicon
+    - role: dehydrated
+      tags: role_dehydrated
+    - role: nginx
+      tags: role_nginx
+    - role: php
+      tags: role_php
   tasks:
     - name: clound-init hostname setting
       block:
