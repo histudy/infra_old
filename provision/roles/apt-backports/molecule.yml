@@ -16,6 +16,6 @@ vagrant:
   instances:
     - name: apt-backports
       ansible_groups:
-        - stretch
+        - default
 verifier:
   name: serverspec
