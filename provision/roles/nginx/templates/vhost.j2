@@ -4,8 +4,8 @@
 {% endif -%}
 server {
     {% if item.ssl is undefined -%}
-    listen 80{{ ' default_server' if item.default|default(false) else ''  }};
-    listen [::]:80{{ ' default_server' if item.default|default(false) else ''  }};
+    listen {{ item.listen|default(80) }}{{ ' default_server' if item.default|default(false) else ''  }};
+    listen [::]:{{ item.listen|default(80) }}{{ ' default_server' if item.default|default(false) else ''  }};
     {% else %}
     listen 443 ssl http2{{ ' default_server' if item.default|default(false) else ''  }};
     listen [::]:443 ssl http2{{ ' default_server' if item.default|default(false) else ''  }};

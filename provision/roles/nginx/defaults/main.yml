@@ -3,79 +3,95 @@ nginx_packages:
   - nginx
 
 nginx_vhosts: []
-#     #--------------
-#     # Simple static site
-#     #--------------
-#     - name: default
-#       default: yes
-#       server_name: www.exampe.com
-#       access_log: /var/log/nginx/access.log
-#       error_log: /var/log/nginx/error.log
-#       document_root: /var/www/html
-#       add_headers:
-#         - name: X-Content-Type-Options
-#           value: nosniff
-#         - name: X-Frame-Options
-#           value: SAMEORIGIN
-#         - name: X-XSS-Protection
-#           value: '"1; mode=block"'
-#       locations:
-#         - pattern: "/\\.ht"
-#           match_type: "~"
-#           content: "deny all;"
-#     # --------------
-#     # WordPress
-#     # --------------
-#     - name: wordpress
-#       server_name: wordpress.exampe.com
-#       index:
-#         - index.html
-#         - index.htm
-#         - index.php
-#       access_log: /var/log/nginx/access.log
-#       error_log: /var/log/nginx/error.log
-#       document_root: "/var/www/html"
-#       client_max_body_size: 16M
-#       includes:
-#         - snippets/wordpress.conf
-#     # --------------
-#     # PHP and SSL
-#     # --------------
-#     - name: ssl
-#       server_name: ssl.exampe.com
-#       index: "index.html index.htm index.php"
-#       access_log: /var/log/nginx/ssl.access.log
-#       error_log: /var/log/nginx/ssl.error.log
-#       document_root: /var/ssl_site
-#       client_max_body_size: 50M
-#       locations:
-#         - pattern: "\\.php"
-#           match_type: "~"
-#           content: |
-#             fastcgi_pass	unix:/var/run/php/php7.0-fpm.sock;
-#             include snippets/fastcgi-php.conf;
-#         - pattern: "/\\.ht"
-#           match_type: "~"
-#           content: "deny all;"
-#       ssl:
-#         certificate: /path/to/cert.pem
-#         certificate_key:  /path/to/privkey.pem
-#         trusted_certificate: /path/to/chain.pem
-#         session_timeout: "1d"
-#         session_cache: "shared:SSL:50m"
-#         session_tickets: no
-#         hsts: "max-age=15768000; includeSubDomains;"
-#         stapling: yes
-#         stapling_verify: yes
-#     # --------------
-#     # Reverse proxy
-#     # --------------
-#     - name: reverse_proxy
-#       locations:
-#         - pattern: /
-#           content: |
-#             proxy_pass	http://127.0.0.1:8080;
-#             include proxy_params;
+    # #--------------
+    # # Simple static site
+    # #--------------
+    # - name: default
+    #   default: yes
+    #   server_name: www.exampe.com
+    #   access_log: /var/log/nginx/access.log
+    #   error_log: /var/log/nginx/error.log
+    #   document_root: /var/www/html
+    #   add_headers:
+    #     - name: X-Content-Type-Options
+    #       value: nosniff
+    #     - name: X-Frame-Options
+    #       value: SAMEORIGIN
+    #     - name: X-XSS-Protection
+    #       value: '"1; mode=block"'
+    #   locations:
+    #     - pattern: "/\\.ht"
+    #       match_type: "~"
+    #       content: "deny all;"
+    # # --------------
+    # # WordPress
+    # # --------------
+    # - name: wordpress
+    #   server_name: wordpress.exampe.com
+    #   index:
+    #     - index.html
+    #     - index.htm
+    #     - index.php
+    #   access_log: /var/log/nginx/access.log
+    #   error_log: /var/log/nginx/error.log
+    #   document_root: "/var/www/html"
+    #   client_max_body_size: 16M
+    #   includes:
+    #     - snippets/wordpress.conf
+    # # --------------
+    # # PHP and SSL
+    # # --------------
+    # - name: ssl
+    #   server_name: ssl.exampe.com
+    #   index: "index.html index.htm index.php"
+    #   access_log: /var/log/nginx/ssl.access.log
+    #   error_log: /var/log/nginx/ssl.error.log
+    #   document_root: /var/ssl_site
+    #   client_max_body_size: 50M
+    #   locations:
+    #     - pattern: /
+    #       content: |
+    #         try_files $uri $uri/ /index.php?$query_string;
+    #     - pattern: "\\.php"
+    #       match_type: "~"
+    #       content: |
+    #         fastcgi_pass	unix:/var/run/php/php7.0-fpm.sock;
+    #         include snippets/fastcgi-php.conf;
+    #     - pattern: "/\\.ht"
+    #       match_type: "~"
+    #       content: "deny all;"
+    #   ssl:
+    #     certificate: /path/to/cert.pem
+    #     certificate_key:  /path/to/privkey.pem
+    #     trusted_certificate: /path/to/chain.pem
+    #     session_timeout: "1d"
+    #     session_cache: "shared:SSL:50m"
+    #     session_tickets: no
+    #     hsts: "max-age=15768000; includeSubDomains;"
+    #     stapling: yes
+    #     stapling_verify: yes
+    # # --------------
+    # # Reverse proxy
+    # # --------------
+    # - name: reverse_proxy
+    #   locations:
+    #     - pattern: /
+    #       content: |
+    #         proxy_pass	http://127.0.0.1:8080;
+    #         include proxy_params;
+    # # --------------
+    # # status page
+    # # --------------
+    # - name: status
+    #   server_name: localhost
+    #     listen: 8080
+    #     access_log: 'off'
+    #     - pattern: "/nginx_status"
+    #       content: |
+    #         stub_status on;
+    #         access_log off;
+    #         allow 127.0.0.1;
+    #         deny all;
 
 nginx_generate_dh_key: yes
 nginx_dh_key_bit: 2048
