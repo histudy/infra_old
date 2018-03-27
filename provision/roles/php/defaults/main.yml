@@ -2,25 +2,25 @@
 php_default_version: "7.0"
 
 php_packages:
-  - php{{ php_default_version }}-common
-  - php{{ php_default_version }}-json
-  - php{{ php_default_version }}-opcache
-  - php{{ php_default_version }}-readline
-  - php{{ php_default_version }}-cli
-  - php{{ php_default_version }}-dev
-  - php{{ php_default_version }}-curl
-  - php{{ php_default_version }}-mbstring
-  - php{{ php_default_version }}-sqlite3
-  - php{{ php_default_version }}-gd
-  - php{{ php_default_version }}-mysql
-  - php{{ php_default_version }}-xml
-  - php{{ php_default_version }}-bz2
-  - php{{ php_default_version }}-zip
-  - php{{ php_default_version }}-fpm
+  - php7.0-common
+  - php7.0-json
+  - php7.0-opcache
+  - php7.0-readline
+  - php7.0-cli
+  - php7.0-dev
+  - php7.0-curl
+  - php7.0-mbstring
+  - php7.0-sqlite3
+  - php7.0-gd
+  - php7.0-mysql
+  - php7.0-xml
+  - php7.0-bz2
+  - php7.0-zip
+  - php7.0-fpm
 
-php_fpm_package_name: php{{ php_default_version }}-fpm
-php_fpm_service_name: php{{ php_default_version }}-fpm
-php_ini_dir: /etc/php/{{ php_default_version }}
+php_fpm_package_name: php7.0-fpm
+php_fpm_service_name: php7.0-fpm
+php_ini_dir: /etc/php/7.0
 
 php_composer_install: yes
 
