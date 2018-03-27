@@ -47,7 +47,6 @@ diagnostic = {{ 'true' if mackerel_agent_cfg.diagnostic else 'false' }}
 
 # followings are mackerel-agent-plugins https://github.com/mackerelio/mackerel-agent-plugins
 
-
 {% if mackerel_agent_cfg.plugin is defined and mackerel_agent_cfg.plugin.metrics is defined -%}
 {% for key, value in mackerel_agent_cfg.plugin.metrics.items() %}
 [plugin.metrics.{{ key }}]
