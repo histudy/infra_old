@@ -45,7 +45,7 @@ ansible_vars.deep_merge!(YAML.load(dump)['ansible_facts'], deep_merge_option)
 
 dump = `ansible -m debug -a 'var=vars' #{host}`
 dump.slice!(0, trim_string.length)
-ansible_vars.deep_merge!(YAML.load(dump)['vars'], deep_merge_option)
+ansible_vars.deep_merge!(YAML.load(dump)['vars']['hostvars'][host], deep_merge_option)
 
 find_file_patterns = []
 role_paths.each do |role_path|
