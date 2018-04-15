@@ -1,7 +1,9 @@
 ---
+os_auth_pw_max_age: 99999
 ssh_allow_root_with_key: yes
 ssh_use_pam: yes
 sftp_enabled: yes
+
 
 domain: histudy.jp
 
