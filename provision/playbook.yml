@@ -23,6 +23,8 @@
       tags: role_lexicon
     - role: dehydrated
       tags: role_dehydrated
+    - role: mariadb
+      tags: role_mariadb
     - role: nginx
       tags: role_nginx
     - role: php

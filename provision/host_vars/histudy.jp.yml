@@ -2,7 +2,10 @@ dehydrated_cfg:
   challengetype: dns-01
 
 dehydrated_domains:
-  - ["{{ domain }}", "www.{{ domain }}"]
+  - name: "{{ domain }}"
+    domains:
+      - "{{ domain }}"
+      - "www.{{ domain }}"
 
 dehydrated_auto_execute: yes
 
