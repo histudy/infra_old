@@ -7,7 +7,7 @@ ansible:
         minute: 23
       dehydrated_auto_execute: no
       dehydrated_cfg:
-        ca: https://acme-staging.api.letsencrypt.org/directory
+        ca: https://acme-staging-v02.api.letsencrypt.org/directory
         challengetype: dns-01
         ip_version: 4
         user: "root"
@@ -21,15 +21,19 @@ ansible:
         renew_days: 31
         private_key_renew: no
         private_key_rollover: yes
-        key_algo: prime256v1
-        contact_email: "pc.poisoning@gmail.com"
+        key_algo: rsa
+        contact_email: "info@mail.histudy.jp"
         ocsp_must_staple: yes
         ocsp_fetch: no
         auto_cleanup: yes
-        api: 1
+        api: auto
       dehydrated_domains:
-        - example.com
-        - [example.net, www.example.net]
+        - name: test1.histudy.jp
+          domains: test1.histudy.jp
+        - name: test2.histudy.jp
+          domains:
+            - test2-1.histudy.jp
+            - test2-2.histudy.jp
       dehydrated_hook_initialize: "# test hook initialize"
       dehydrated_hook_deploy_challenge: "# test deploy_challenge hook"
       dehydrated_hook_clean_challenge: "# test clean_challenge hook"
@@ -57,6 +61,6 @@ vagrant:
   instances:
     - name: dehydrated
       ansible_groups:
-        - default
+        - molecule
 verifier:
   name: serverspec

@@ -1,13 +1,12 @@
 ---
 dehydrated_cfg:
-  ip_version: ""
   user: ""
   group: ""
-  ca: https://acme-v01.api.letsencrypt.org/directory
+  ca: https://acme-v02.api.letsencrypt.org/directory
   oldca: ""
   challengetype: http-01
   keysize: 4096
-  openssl_cnf:
+  openssl_cnf: ""
   openssl: openssl
   curl_opts: ""
   hook_chain: no
@@ -22,14 +21,18 @@ dehydrated_cfg:
   api: auto
 
 dehydrated_domains: []
-  # - [example.com, www.example.com]
-  # - example.net
+  # - name: example.com
+  #   domains:
+  #     - example.com
+  #     - www.example.com
+  # - name: example.net
+  #   domains: example.net
 
 dehydrated_auto_execute: no
 
 dehydrated_cron:
-  hour: "{{ 23|random }}"
-  minute: "{{ 59|random }}"
+  hour: 4
+  minute: 5
 
 dehydrated_hook_initialize: ""
 dehydrated_hook_deploy_challenge: ""

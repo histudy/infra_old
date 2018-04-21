@@ -31,10 +31,9 @@ dehydratedの設定内容を定義します
 
 ```yml
 dehydrated_cfg:
-  ip_version: ""
   user: ""
   group: ""
-  ca: https://acme-v01.api.letsencrypt.org/directory
+  ca: https://acme-v02.api.letsencrypt.org/directory
   oldca: ""
   challengetype: http-01
   keysize: 4096
@@ -61,8 +60,12 @@ Let's Encryptで証明書を取得するドメインを定義します
 
 ```yml
 dehydrated_domains:
-  - [example.com, www.example.com]
-  - example.net
+    - name: example.com
+      domains:
+        - example.com
+        - www.example.com
+    - name: example.net
+      domains: example.net
 ```
 
 ### dehydrated_auto_execute
