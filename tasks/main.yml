@@ -1,0 +1,74 @@
+---
+- name: install ufw package
+  apt:
+    name: ufw
+- name: install MariaDB packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ mariadb_packages }}"
+- name: install MariaDB plugin packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ mariadb_packages }}"
+- name: insrall python-mysqldb package
+  apt:
+    name: python-mysqldb
+- name: create MariaDB Data directory
+  file:
+    path: "{{ mariadb_cfg.mysqld.innodb_data_home_dir }}"
+    owner: mysql
+    group: mysql
+    state: directory
+  when: mariadb_cfg.mysqld.innodb_data_home_dir is defined
+- name: create MariaDB custom setting file
+  template:
+    src: custom.cnf.j2
+    dest: /etc/mysql/mariadb.conf.d/99-custom.cnf
+  notify: restart mariadb
+- name: MariaDB is active and enable system on startup
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes
+- name: create/remove databases
+  mysql_db:
+    name: "{{ item.name }}"
+    encoding: "{{ item.encoding|default(mariadb_default_charset) }}"
+    collation: "{{ item.collation|default(mariadb_default_collation) }}"
+    state: "{{ 'present' if item.state|default(true) else 'absent' }}"
+  with_items: "{{ mariadb_databases }}"
+- name: create MariaDB users
+  mysql_user:
+    name: "{{ item.0.user|default(item.0.name) }}"
+    password: "{{ item.0.password|default(omit) }}"
+    host: "{{ item.1 }}"
+    priv: "{{ item.0.name }}.*:ALL"
+  with_subelements:
+    - "{{ mariadb_databases }}"
+    - hosts
+    - flags:
+        skip_missing: yes
+- name: import data
+  mysql_db:
+    name: "{{ item.name }}"
+    target: "{{ item.import_data }}"
+    state: import
+  when: item.state|default(true)
+  with_items: "{{ mariadb_databases|selectattr('import_data', 'defined')|list }}"
+- name: create/remove MariaDB users
+  mysql_user:
+    name: "{{ item.0.name }}"
+    password: "{{ item.0.password }}"
+    host: "{{ item.1 }}"
+    priv: "{{ item.0.priv }}"
+    state: "{{ 'present' if item.0.state|default(true) else 'absent' }}"
+  with_subelements:
+    - "{{ mariadb_users }}"
+    - hosts
+- name: allow MySQL port
+  ufw:
+    rule: allow
+    port: 3306
+    proto: tcp
+    from_ip: "{{ mariadb_allow_host }}"
+  when: mariadb_allow_host is defined
