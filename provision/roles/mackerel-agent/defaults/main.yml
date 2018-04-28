@@ -1,6 +1,6 @@
 ---
 mackerel_agent_api_key: ""
-mackerel_agent_cfg:
+mackerel_agent_cfg: []
   # pidfile: /var/run/mackerel-agent.pid
   # root: /var/lib/mackerel-agent
   # verbose: no
