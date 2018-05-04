@@ -40,7 +40,7 @@ Ansibleを利用しサーバーの構成を管理しています。
 | CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン    |
 | MACKEREL_API_KEY   | [Mackerel][mackerel]のAPIキー            |
 
-[vagrant_cloud]: https://app.vagrantup.com/histudy/
-[cloudflare]: https://www.cloudflare.com/
-[mackerel]: https://mackerel.io/
-[histudy]: https://histudy.jp/
+* [vagrant_cloud]: https://app.vagrantup.com/histudy/
+* [cloudflare]: https://www.cloudflare.com/
+* [mackerel]: https://mackerel.io/
+* [histudy]: https://histudy.jp/
