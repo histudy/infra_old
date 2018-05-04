@@ -33,3 +33,10 @@ resource cloudflare_record "postmaster_tool_auth" {
   ttl    = "86400"
   value  = "google-site-verification=7PjGDFZDUN-c85npu9gYvkj1DN0SVGnRBVhQQDDv5nY"
 }
+
+resource cloudflare_record "vyos" {
+  domain = "histudy.jp"
+  name   = "vyos"
+  value  = "133.223.1.217"
+  type   = "A"
+}
