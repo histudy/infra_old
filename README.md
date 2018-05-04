@@ -1,6 +1,8 @@
 # infra
 
-histudy/infraでは、姫路IT系勉強会が主催している姫路IT系勉強会、加古川IT系インフラ勉強会のサーバを管理するためのインフラ周りのコードを管理しています。
+histudy/infraでは、姫路IT系勉強会が主催している姫路IT系勉強会、
+
+加古川IT系インフラ勉強会のサーバを管理するためのインフラ周りのコードを管理しています。
 
 環境
 ---------------------------
@@ -28,6 +30,10 @@ Packerの設定ファイルやイメージの生成に必要なファイルを�
 
 Ansibleを利用しサーバーの構成を管理しています。
 
+roles以下の各ディレクトリは、それぞれ独立したリポジトリで管理しています。
+
+[https://github.com/histudy?q=ansible-role] で検索すると見つけやすいです。
+
 環境変数について
 ---------------------------
 
@@ -40,7 +46,7 @@ Ansibleを利用しサーバーの構成を管理しています。
 | CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン    |
 | MACKEREL_API_KEY   | [Mackerel][mackerel]のAPIキー            |
 
-* [vagrant_cloud]: https://app.vagrantup.com/histudy/
-* [cloudflare]: https://www.cloudflare.com/
-* [mackerel]: https://mackerel.io/
-* [histudy]: https://histudy.jp/
+[vagrant_cloud]: https://app.vagrantup.com/histudy/
+[cloudflare]: https://www.cloudflare.com/
+[mackerel]: https://mackerel.io/
+[histudy]: https://histudy.jp/
