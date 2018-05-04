@@ -32,7 +32,7 @@ Ansibleを利用しサーバーの構成を管理しています。
 
 roles以下の各ディレクトリは、それぞれ独立したリポジトリで管理しています。
 
-[https://github.com/histudy?q=ansible-role] で検索すると見つけやすいです。
+[ansible-role](https://github.com/histudy?q=ansible-role) で検索すると見つけやすいです。
 
 環境変数について
 ---------------------------
