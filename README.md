@@ -32,7 +32,17 @@ Ansibleを利用しサーバーの構成を管理しています。
 
 roles以下の各ディレクトリは、それぞれ独立したリポジトリで管理しています。
 
-[ansible-role](https://github.com/histudy?q=ansible-role) で検索すると見つけやすいです。
+| role ディレクトリ                |
+| -------------------------------- |
+| [apt-backports][apt-backports]   |
+| [common][common]                 |
+| [dehydrated][dehydrated]         |
+| [lexicon][lexicon]               |
+| [mackerel-agent][mackerel-agent] |
+| [nginx][nginx]                   |
+| [python][python]                 |
+
+その他のロールについては、 [ansible-role](https://github.com/histudy?q=ansible-role) で検索すると見つけやすいです。
 
 環境変数について
 ---------------------------
@@ -50,3 +60,10 @@ roles以下の各ディレクトリは、それぞれ独立したリポジトリ
 [cloudflare]: https://www.cloudflare.com/
 [mackerel]: https://mackerel.io/
 [histudy]: https://histudy.jp/
+[apt-backports]: https://github.com/histudy/ansible-role-apt-backports
+[common]: https://github.com/histudy/ansible-role-common
+[dehydrated]: https://github.com/histudy/ansible-role-dehydrated
+[lexicon]: https://github.com/histudy/ansible-role-lexicon
+[mackerel-agent]: https://github.com/histudy/ansible-role-mackerel-agent
+[nginx]: https://github.com/histudy/ansible-role-nginx
+[python]: https://github.com/histudy/ansible-role-python
