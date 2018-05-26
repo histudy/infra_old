@@ -1,7 +1,7 @@
 lexicon
 =========
 
-[lexicon](https://github.com/AnalogJ/lexicon)をインストールします
+[lexicon](https://github.com/AnalogJ/lexicon)をインストールします。
 
 Dependencies
 ------------
