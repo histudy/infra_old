@@ -1,7 +1,12 @@
 dehydrated
 =========
 
-dehydratedのインストールとセットアップを行います
+dehydratedのインストールとセットアップを行います。
+
+Dependencies
+------------
+
+* [apt-backports](https://github.com/histudy/ansible-role-apt-backports)
 
 Role Variables
 --------------
@@ -11,8 +16,8 @@ Role Variables
 | dehydrated_cfg                    | dehydratedの設定内容を定義します                                 |
 | dehydrated_domains                | Let's Encryptで証明書を取得するドメインを定義します              |
 | dehydrated_auto_execute           | プロビジョニング実行時にdehydratedの実行を行うか否かを指定します |
-| dehydrated_cron                   | cronで実行する証明書更新処理の実行時刻を設定します               |
-| dehydrated_hook_initialize        | フックスクリプトの初期化処理を定義します                         |
+| dehydrated_cron                   | 証明書の更新処理を実行する時刻を指定します                       |
+| dehydrated_hook_initialize        | フックスクリプトの初期化処理を指定します                         |
 | dehydrated_hook_deploy_challenge  | deploy_challengeフック呼び出し時の実行内容を定義します           |
 | dehydrated_hook_clean_challenge   | clean_challengeフック呼び出し時の実行内容を定義します            |
 | dehydrated_hook_deploy_cert       | deploy_certフック呼び出し時の実行内容を定義します                |
@@ -25,7 +30,7 @@ Role Variables
 
 ### dehydrated_cfg
 
-dehydratedの設定内容を定義します
+dehydratedの設定内容を定義します。
 
 #### Example
 
@@ -54,7 +59,7 @@ dehydrated_cfg:
 
 ### dehydrated_domains
 
-Let's Encryptで証明書を取得するドメインを定義します
+Let's Encryptで証明書を取得するドメインを指定します。
 
 #### Example
 
@@ -70,7 +75,7 @@ dehydrated_domains:
 
 ### dehydrated_auto_execute
 
-プロビジョニング実行時にdehydratedの実行を行うか否かを指定します
+プロビジョニング実行時にdehydratedの実行を行うか否かを指定します。
 
 #### Example
 
@@ -80,7 +85,7 @@ dehydrated_auto_execute: yes
 
 ### dehydrated_cron
 
-cronで実行する証明書更新処理の実行時刻を設定します
+証明書の更新処理を実行する時刻を指定します。
 
 #### Example
 
@@ -92,7 +97,7 @@ dehydrated_cron:
 
 ### dehydrated_hook_initialize
 
-フックスクリプトの初期化処理を定義します
+フックスクリプトの初期化処理を定義します。
 
 #### Example
 
@@ -103,7 +108,7 @@ dehydrated_hook_initialize: |
 
 ### dehydrated_hook_deploy_challenge
 
-deploy_challengeフック呼び出し時の実行内容を定義します
+deploy_challengeフック呼び出し時の実行内容を定義します。
 
 #### Example
 
@@ -114,7 +119,7 @@ dehydrated_hook_deploy_challenge: |
 
 ### dehydrated_hook_clean_challenge
 
-clean_challengeフック呼び出し時の実行内容を定義します
+clean_challengeフック呼び出し時の実行内容を定義します。
 
 #### Example
 
@@ -125,36 +130,31 @@ dehydrated_hook_clean_challenge: |
 
 ### dehydrated_hook_deploy_cert
 
-deploy_certフック呼び出し時の実行内容を定義します
+deploy_certフック呼び出し時の実行内容を定義します。
 
 ### dehydrated_hook_unchanged_cert
 
-unchanged_certフック呼び出し時の実行内容を定義します
+unchanged_certフック呼び出し時の実行内容を定義します。
 
 ### dehydrated_hook_invalid_challenge
 
-invalid_challengeフック呼び出し時の実行内容を定義します
+invalid_challengeフック呼び出し時の実行内容を定義します。
 
 ### dehydrated_hook_request_failure
 
-request_failureフック呼び出し時の実行内容を定義します
+request_failureフック呼び出し時の実行内容を定義します。
 
 ### dehydrated_hook_generate_csr
 
-generate_csrフック呼び出し時の実行内容を定義します
+generate_csrフック呼び出し時の実行内容を定義します。
 
 ### dehydrated_hook_startup_hook
 
-startup_hookフック呼び出し時の実行内容を定義します
+startup_hookフック呼び出し時の実行内容を定義します。
 
 ### dehydrated_hook_exit_hook
 
-exit_hookフック呼び出し時の実行内容を定義します
-
-Dependencies
-------------
-
-* [apt-backports](https://github.com/histudy/ansible-role-apt-backports)
+exit_hookフック呼び出し時の実行内容を定義します。
 
 Example Playbook
 ----------------
