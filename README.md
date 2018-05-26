@@ -1,7 +1,7 @@
 php
 =========
 
-[php](http://php.net/)のインストールとセットアップを行います
+[php](http://php.net/)のインストールとセットアップを行います。
 
 Role Variables
 --------------
@@ -43,8 +43,8 @@ php_packages:
 ### php_fpm_package_name
 
 php-fpmのパッケージ名を指定します。  
-`php_packages`変数にこの変数にに指定されたパッケージを含んでいた場合は、  
-php-fpmのサービスを同時に有効化します。
+`php_packages`変数にこの変数で指定されたパッケージが含まれている場合は、  
+`php_fpm_package_name`変数で指定されたサービスを有効化します。
 
 #### Example
 
@@ -52,10 +52,10 @@ php-fpmのサービスを同時に有効化します。
 php_fpm_package_name: php{{ php_default_version }}-fpm
 ```
 
-### php_fpm_service_name: php{{ php_default_version }}-fpm
+### php_fpm_service_name
 
 php-fpmのサービス名を指定します。  
-`php_packages`変数に`php_fpm_package_name`変数に指定されたパッケージを含んでいた場合は、   
+`php_packages`変数に`php_fpm_package_name`変数で指定されたパッケージが含まれている場合は、   
 この変数で指定されたサービスを有効化します。
 
 
@@ -65,7 +65,7 @@ php-fpmのサービス名を指定します。
 php_fpm_service_name: php{{ php_default_version }}-fpm
 ```
 
-### php_ini_dir: /etc/php/{{ php_default_version }}
+### php_ini_dir
 
 php.iniが格納されているディレクトリ名を指定します。
 
@@ -75,7 +75,7 @@ php.iniが格納されているディレクトリ名を指定します。
 php_ini_dir: /etc/php/{{ php_default_version }}
 ```
 
-### php_composer_install: yes
+### php_composer_install
 
 [composer](https://getcomposer.org/)をインストールする否かを指定します。
 
