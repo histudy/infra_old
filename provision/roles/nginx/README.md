@@ -1,7 +1,12 @@
 nginx
 =========
 
-[Nginx](https://nginx.org/)のインストールとセットアップを行います
+[Nginx](https://nginx.org/)のインストールとセットアップを行います。
+
+Dependencies
+------------
+
+* [apt-backports](https://github.com/histudy/ansible-role-apt-backports)
 
 Role Variables
 --------------
@@ -73,7 +78,7 @@ serverディレクティブの内容を設定します。
 
 #### Example
 
-※以下、指定可能な全項目の設定例です
+※以下、指定可能な全項目の設定例です。
 
 ```yml
 nginx_vhosts:
