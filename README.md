@@ -2,7 +2,12 @@ common
 =========
 
 ユーザーの追加や基本的なパッケージのインストールなど
-サーバーの共通のセットアップ処理を行います
+サーバーの共通のセットアップ処理を行います。
+
+Dependencies
+------------
+
+* [apt-backports](https://github.com/histudy/ansible-role-apt-backports)
 
 Role Variables
 --------------
@@ -30,7 +35,7 @@ Role Variables
 
 #### Example
 
-```
+```yml
 common_groups:
   - name: group_one
   - name: group_two
@@ -54,7 +59,7 @@ common_groups:
 
 #### Example
 
-```
+```yml
 common_users:
   - name: hoge
     admin: yes
@@ -102,7 +107,7 @@ common_packages:
 
 ### common_ssh_port
 
-SSH用のポート番号を指定します
+SSH用のポート番号を指定します。
 
 #### Example
 
@@ -112,7 +117,7 @@ common_ssh_port: 22
 
 ### common_ssh_use_geoip_filter
 
-GeoIPによるSSHのフィルタリングを行うか否かを設定します
+GeoIPによるSSHのフィルタリングを行うか否かを設定します。
 
 #### Example
 
@@ -123,7 +128,7 @@ common_ssh_use_geoip_filter: yes
 ### common_ssh_allow_countries
 
 SSHへの接続を許可する接続元の国コードを設定します。  
-※common_ssh_use_geoip_filterが`true`に設定されている場合のみ有効です
+※common_ssh_use_geoip_filterが`true`に設定されている場合のみ有効です。
 
 #### Example
 
@@ -136,7 +141,7 @@ common_ssh_allow_countries:
 ### common_cron_geoip_update
 
 cronで実行するGeoIPデータベース更新処理の実行時刻を設定します。  
-※common_ssh_use_geoip_filterが`true`に設定されている場合のみ有効です
+※common_ssh_use_geoip_filterが`true`に設定されている場合のみ有効です。
 
 | 項目   | 必須 | 内容                           |
 | ------ | ---- | ------------------------------ |
@@ -153,7 +158,7 @@ common_cron_geoip_update:
 
 ### common_requre_sudo_password
 
-管理ユーザーがsudoでコマンド実行する場合に、パスワードの入力を必要とするか否かを設定します。  
+管理ユーザーがsudoでコマンド実行する場合に、パスワードの入力を必要とするか否かを設定します。
 
 #### Example
 
