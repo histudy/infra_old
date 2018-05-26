@@ -1,7 +1,7 @@
 python
 =========
 
-Pythonの基本パッケージをインストールします
+Pythonの基本パッケージをインストールします。
 
 Role Variables
 --------------
@@ -12,7 +12,7 @@ Role Variables
 
 ### python_packages
 
-Pythonの基本パッケージを設定します
+Pythonの基本パッケージを設定します。
 
 #### Example
 
