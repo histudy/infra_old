@@ -1,7 +1,7 @@
 mackerel-agent
 =========
 
-mackerel-agentのインストールとセットアップを行います
+mackerel-agentのインストールとセットアップを行います。
 
 Role Variables
 --------------
@@ -17,11 +17,11 @@ Role Variables
 
 ### mackerel_agent_api_key
 
-mackerel-agentのAPIキーを設定します
+mackerel-agentのAPIキーを設定します。
 
 ### mackerel_agent_cfg
 
-mackerel-agentの設定を定義します
+mackerel-agentの設定を定義します。
 
 #### Example
 
@@ -52,8 +52,8 @@ mackerel_agent_cfg:
 
 ### mackerel_agent_install_agent_plugins
 
-この変数に`true`が設定されている場合、
-mackerel-agent-pluginsのインストールを行います
+この変数に`true`が設定されている場合、  
+mackerel-agent-pluginsのインストールを行います。
 
 #### Example
 
@@ -64,7 +64,7 @@ mackerel_agent_install_check_plugins: no
 ### mackerel_agent_install_check_plugins
 
 この変数に`true`が設定されている場合、
-mackerel-check-pluginsのインストールを行います
+mackerel-check-pluginsのインストールを行います。
 
 #### Example
 
@@ -74,7 +74,7 @@ mackerel_agent_install_check_plugins: no
 
 ### mackerel_agent_active_and_enabled_on_system_startup
 
-mackerel-agentを起動させるかどうかを設定します
+mackerel-agentを起動させるかどうかを設定します。
 
 この変数に`true`が設定されている場合、
 mackerel-agentを有効に設定し起動させます。
