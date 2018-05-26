@@ -1,7 +1,7 @@
 apt-backports
 =========
 
-Debian Backportsをインストールします
+Debian Backportsをインストールします。
 
 Role Variables
 --------------
@@ -12,7 +12,7 @@ Role Variables
 
 ### apt_backports_default_target
 
-デフォルトのターゲットをDebian Backportsに設定するかどうかを指定します
+デフォルトのターゲットをDebian Backportsに設定するかどうかを指定します。
 
 #### Example
 
