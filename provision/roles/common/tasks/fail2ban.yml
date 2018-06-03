@@ -16,15 +16,10 @@
     value: "{{ item.value }}"
     create: yes
   with_items:
-    - section: DEFAULT
-      option: banaction
-      value: firewallcmd-ipset
-    - section: DEFAULT
-      option: backend
-      value: systemd
     - section: sshd
       option: enabled
       value: yes
+  notify: restart fail2ban
 - name: fail2ban active and enabled on system startup service
   systemd:
     name: fail2ban
