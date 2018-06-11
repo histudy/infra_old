@@ -1,6 +1,5 @@
 provider sakuracloud {
   zone            = "tk1v"
-  trace           = true
   use_marker_tags = true
 }
 
