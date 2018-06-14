@@ -113,8 +113,8 @@ resource sakuracloud_disk "influxdb" {
 resource sakuracloud_server "influxdb" {
   name        = "influxdb"
   disks       = ["${sakuracloud_disk.influxdb.id}"]
-  core        = 1
-  memory      = 1
+  core        = 2
+  memory      = 2
   nic         = "${sakuracloud_switch.main.id}"
   ipaddress   = "192.168.1.110"
   gateway     = "192.168.1.50"
