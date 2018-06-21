@@ -6,8 +6,8 @@ mariadb_packages:
 
 # mariadb_allow_host: "192.168.33.0/24"
 
-mariadb_default_charset: utf8
-mariadb_default_collation: utf8_general_ci
+mariadb_default_charset: utf8mb4
+mariadb_default_collation: utf8mb4_general_ci
 
 mariadb_databases: []
   # - name: sample
