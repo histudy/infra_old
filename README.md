@@ -63,7 +63,10 @@ Ansibleを利用しサーバーの構成を管理しています。
 | CLOUDFLARE_EMAIL   | [Cloudflare][cloudflare]のアカウント     | terraform / provision  |
 | CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン    | terraform / provision  |
 | MACKEREL_API_KEY   | [Mackerel][mackerel]のAPIキー            | provision              |
+| VAULT_ADDR         | [Vault][vault]のサーバーアドレス         | provision              |
+| VAULT_TOKEN        | [Vault][vault]のトークン                 | provision              |
 
 [vagrant_cloud]: https://app.vagrantup.com/histudy
 [cloudflare]: https://www.cloudflare.com/
 [mackerel]: https://mackerel.io/
+[vault]: https://www.vaultproject.io/
