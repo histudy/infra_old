@@ -80,3 +80,17 @@ mackerel_agent_cfg:
   plugin:
     metrics:
       nginx: /usr/bin/mackerel-plugin-nginx
+
+mariadb_databases:
+    - name: "{{ lookup('hashi_vault', 'secret=secret/histudy/database/wordpress:name') }}"
+      user: "{{ lookup('hashi_vault', 'secret=secret/histudy/database/wordpress:user') }}"
+      password: "{{ lookup('hashi_vault', 'secret=secret/histudy/database/wordpress:password') }}"
+      hosts:
+        - localhost
+        - 127.0.0.1
+  - name: "{{ lookup('hashi_vault', 'secret=secret/histudy/database/redmine:name') }}"
+    user: "{{ lookup('hashi_vault', 'secret=secret/histudy/database/redmine:user') }}"
+    password: "{{ lookup('hashi_vault', 'secret=secret/histudy/database/redmine:password') }}"
+    hosts:
+      - localhost
+      - 127.0.0.1
