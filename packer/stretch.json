@@ -4,10 +4,10 @@
     "vagrantcloud_name": "stretch",
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
     "debian_version_major": "9",
-    "debian_version_minor": "4",
+    "debian_version_minor": "5",
     "debian_version_patch": "0",
-    "iso_checksum_type": "sha1",
-    "iso_checksum": "da34180d8f618a6a311fe31fb08508496eb91601"
+    "iso_checksum_type": "sha256",
+    "iso_checksum": "1f97a4b8dee7c3def5cd8215ff01b9edef27c901b28fa8b1ef4f022eff7c36c2"
   },
   "builders": [{
     "type": "virtualbox-iso",
