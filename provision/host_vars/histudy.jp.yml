@@ -17,7 +17,9 @@ dehydrated_hook_initialize: |
 dehydrated_hook_deploy_challenge: |
   lexicon ${PROVIDER} create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
   sleep 30
-  systemctl restart nginx
+  if [ -e /lib/systemd/system/nginx.service ]; then
+    /bin/systemctl reload nginx
+  fi
 
 dehydrated_hook_clean_challenge: |
   lexicon ${PROVIDER} delete ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
