@@ -6,10 +6,6 @@
   apt:
     name: "{{ item }}"
   with_items: "{{ mariadb_packages }}"
-- name: install MariaDB plugin packages
-  apt:
-    name: "{{ item }}"
-  with_items: "{{ mariadb_packages }}"
 - name: insrall python-mysqldb package
   apt:
     name: python-mysqldb
