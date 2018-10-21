@@ -4,9 +4,8 @@
     name: ufw
 - name: install nginx
   apt:
-    name: "{{ item }}"
+    name: "{{ nginx_packages }}"
     default_release: "{{ ansible_distribution_release }}-backports"
-  with_items: "{{ nginx_packages }}"
 - name: create config directories
   file:
     path: /etc/nginx/{{ item }}
@@ -24,13 +23,9 @@
     dest: /etc/nginx/nginx.conf
   notify: restart nginx
 - name: generate OpenSSL Diffie-Hellman parameters
-  # Ansible 2.5 or later
-  # openssl_dhparam:
-  #   path: "{{ nginx_dh_key_path }}"
-  #   size: "{{ nginx_dh_key_bit }}"
-  command: openssl dhparam -out {{ nginx_dh_key_path }} {{ nginx_dh_key_bit }}
-  args:
-    creates: "{{ nginx_dh_key_path }}"
+  openssl_dhparam:
+    path: "{{ nginx_dh_key_path }}"
+    size: "{{ nginx_dh_key_bit }}"
   when: nginx_generate_dh_key
 - name: copy snippet files
   copy:
@@ -46,7 +41,7 @@
 - name: change extra config status
   file:
     path: "/etc/nginx/modules-enabled/{{ item.name }}.conf"
-    src: "/etc/nginx/modules-available/{{ item.name }}.conf"
+    src: "{{ '/etc/nginx/modules-available/' + item.name + '.conf' if item.state|default(true) else omit }}"
     state: "{{ 'link' if item.state|default(true) else 'absent' }}"
   with_items: "{{ nginx_modules }}"
   notify: restart nginx
@@ -59,7 +54,7 @@
 - name: change site config
   file:
     path: /etc/nginx/sites-enabled/{{ item.name|default(item.server_name) }}
-    src: /etc/nginx/sites-available/{{ item.name|default(item.server_name) }}
+    src: "{{ '/etc/nginx/sites-available/' + item.name|default(item.server_name) if item.state|default(true) else omit }}"
     state: "{{ 'link' if item.state|default(true) else 'absent' }}"
   with_items: "{{ nginx_vhosts }}"
   notify: reload nginx
