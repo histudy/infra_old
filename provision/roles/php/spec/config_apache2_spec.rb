@@ -2,9 +2,9 @@ require 'spec_helper'
 
 def to_ini_value(value)
   return '' if value.nil?
-  if !!value === value
-    return value ? 'On' : 'Off'
-  end
+
+  return value ? 'On' : 'Off' if !!value === value
+
   escape_value = value.is_a?(String) ? value : value.to_s
   Regexp.escape(escape_value)
 end
