@@ -1,10 +1,9 @@
 ---
 - name: install dependency packages
   apt:
-    name: "{{ item }}"
-  with_items:
-    - python-apt
-    - aptitude
+    name:
+      - python-apt
+      - aptitude
 - name: set hostname
   hostname:
     name: "{{ common_hostname }}"
@@ -37,8 +36,7 @@
     name: etckeeper
 - name: install common packages
   apt:
-    name: "{{ item }}"
-  with_items: "{{ common_packages }}"
+    name: "{{ common_packages }}"
 - name: setup ufw
   import_tasks: ufw.yml
   tags:
