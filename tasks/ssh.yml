@@ -1,12 +1,11 @@
 ---
 - name: install dependency packages
   apt:
-    name: "{{ item }}"
-  with_items:
-    - geoip-bin
-    - geoip-database
-    - gzip
-    - cron
+    name:
+      - geoip-bin
+      - geoip-database
+      - gzip
+      - cron
 - name: create ssh filter script
   template:
     src: sshfilter.j2

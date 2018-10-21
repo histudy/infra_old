@@ -2,7 +2,7 @@ galaxy_info:
   author: wate
   description: install common python packages
   license: MIT
-  min_ansible_version: 2.1
+  min_ansible_version: 2.5
   platforms:
     - name: Debian
       versions:
