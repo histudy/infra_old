@@ -1,3 +1,8 @@
+# dev-sec.os-hardeningの再適用の無効化
+# ※以下の処理の再適用に時間がかかるため
+# https://github.com/dev-sec/ansible-os-hardening/blob/master/tasks/minimize_access.yml
+os_hardening_enabled: no
+
 dehydrated_cfg:
   challengetype: dns-01
 
