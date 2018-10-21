@@ -1,8 +1,7 @@
 ---
 - name: install PHP
   apt:
-    name: "{{ item }}"
-  with_items: "{{ php_packages }}"
+    name: "{{ php_packages }}"
 - name: set cli php.ini template variable
   set_fact:
     php_cfg: "{{ php_ini_cli_cfg }}"
