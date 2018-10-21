@@ -1,11 +1,10 @@
 ---
 - name: install dependency packages
   apt:
-    name: "{{ item }}"
-  with_items:
-    - python-requests
-    - python-future
-    - python-boto3
+    name:
+      - python-requests
+      - python-future
+      - python-boto3
 - name: install lexicon
   pip:
     name: dns-lexicon
