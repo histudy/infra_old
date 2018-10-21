@@ -21,6 +21,7 @@
   template:
     src: mackerel-agent.conf.j2
     dest: /etc/mackerel-agent/mackerel-agent.conf
+    mode: "0600"
   notify: restart mackerel-agent
 - name: mackerel-agent is active and enabled on system startup service
   systemd:

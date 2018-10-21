@@ -15,7 +15,7 @@ verbose = {{ 'true' if mackerel_agent_cfg.verbose else 'false' }}
 display_name = "{{ mackerel_agent_cfg.display_name }}"
 {% endif %}
 {% if mackerel_agent_cfg.roles is defined -%}
-roles = [ "{{ mackerel_agent_cfg.roles|join('","') }}" ]
+roles = [ "{{ mackerel_agent_cfg.roles|join('", "') }}" ]
 {% endif %}
 {% if mackerel_agent_cfg.http_proxy is defined -%}
 http_proxy = "{{ mackerel_agent_cfg.http_proxy }}"
@@ -48,38 +48,66 @@ diagnostic = {{ 'true' if mackerel_agent_cfg.diagnostic else 'false' }}
 # followings are mackerel-agent-plugins https://github.com/mackerelio/mackerel-agent-plugins
 
 {% if mackerel_agent_cfg.plugin is defined and mackerel_agent_cfg.plugin.metrics is defined -%}
-{% for key, value in mackerel_agent_cfg.plugin.metrics.items() %}
+{%   for key, value in mackerel_agent_cfg.plugin.metrics.items() %}
 [plugin.metrics.{{ key }}]
-command = "{{ value }}"
-{% endfor %}
+command = "{{ value|replace('\\', '\\\\')|replace('"', '\\"') }}"
+
+{%   endfor %}
 {% endif %}
 
 {% if mackerel_agent_cfg.plugin is defined and mackerel_agent_cfg.plugin.checks is defined -%}
-{% for key, value in mackerel_agent_cfg.plugin.checks.items() %}
+{%   for key, value in mackerel_agent_cfg.plugin.checks.items() %}
 [plugin.checks.{{ key }}]
-command = "{{ value }}"
-{% endfor %}
+{%     if value is string -%}
+command = "{{ value|replace('\\', '\\\\')|replace('"', '\\"') }}"
+{%     else -%}
+command = "{{ value.command|replace('\\', '\\\\')|replace('"', '\\"') }}"
+{%       if value.notification_interval is defined -%}
+notification_interval = {{ value.notification_interval }}
+{%       endif %}
+{%       if value.max_check_attempts is defined -%}
+max_check_attempts = {{ value.max_check_attempts }}
+{%       endif %}
+{%       if value.check_interval is defined -%}
+check_interval = {{ value.check_interval }}
+{%       endif %}
+{%       if value.timeout_seconds is defined -%}
+timeout_seconds = {{ value.timeout_seconds }}
+{%       endif %}
+{%       if value.prevent_alert_auto_close is defined -%}
+prevent_alert_auto_close = {{ 'true' if value.prevent_alert_auto_close else 'false' }}
+{%       endif %}
+{%       if value.memo is defined -%}
+memo = "{{ value.memo|replace('\\', '\\\\')|replace('"', '\\"') }}"
+{%       endif %}
+{%       if value.env is defined %}
+
+[plugin.checks.{{ key }}.env]
+{%         for env_name, env_value in value.env.items() -%}
+{{ env_name }} = "{{ env_value|replace('\\', '\\\\')|replace('"', '\\"') }}"
+{%         endfor %}
+{%       endif %}
+{%       if value.action is defined %}
+
+[plugin.checks.{{ key }}.action]
+command = "{{ value.action.command|replace('\\', '\\\\')|replace('"', '\\"') }}"
+{%         if value.action.user is defined -%}
+user = "{{ value.action.user }}"
+{%         endif %}
+{%         if value.action.env is defined %}
+
+[plugin.checks.{{ key }}.action.env]
+{%           for act_env_name, act_env_value in value.action.env.items() -%}
+{{ act_env_name }} = "{{ act_env_value|replace('\\', '\\\\')|replace('"', '\\"') }}"
+{%           endfor %}
+{%         endif %}
+{%       endif %}
+
+{%     endif %}
+
+{%   endfor %}
 {% endif %}
 
-{% if mackerel_check_plugins is defined -%}
-{% for key, value in mackerel_check_plugins.items() %}
-[plugin.checks.{{ key }}]
-{% if value is iterable -%}
-command = "{{ value.command }}"
-{% if value.notification_interval is defined -%}
-notification_interval = {{ value.notification_interval }}
-{% endif %}
-{% if value.max_check_attempts is defined -%}
-max_check_attempts = {{ value.max_check_attempts }}
-{% endif %}
-{% if value.check_interval is defined -%}
-check_interval = {{ value.check_interval }}
-{% endif %}
-{% if value.prevent_alert_auto_close is defined -%}
-prevent_alert_auto_close = {{ 'true' if value.prevent_alert_auto_close else 'false' }}
-{% endif %}
-{% else %}
-command = "{{ value }}"
-{% endif %}
-{% endfor %}
+{% if mackerel_agent_cfg.extra_setting is defined -%}
+{{ mackerel_agent_cfg.extra_setting }}
 {% endif %}

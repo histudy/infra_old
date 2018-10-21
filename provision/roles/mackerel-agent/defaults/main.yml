@@ -1,5 +1,6 @@
 ---
 mackerel_agent_api_key: ""
+
 mackerel_agent_cfg: []
   # pidfile: /var/run/mackerel-agent.pid
   # root: /var/lib/mackerel-agent
@@ -17,11 +18,29 @@ mackerel_agent_cfg: []
   #   use_mountpoint: yes
   # plugin:
   #   metrics:
-  #     apache2: mackerel-plugin-apache2
-  #   checkes:
-  #     log: "/path/to/check-log --file=/path/to/file --pattern=REGEXP --warning-over=N --critical-over=N"
+  #     apache2: /usr/bin/mackerel-plugin-apache2
+  #     mailq: /usr/bin/mackerel-plugin-mailq -M postfix
+  #   checks:
+  #     log: "/usr/bin/check-log --file=/path/to/file --pattern=REGEXP --warning-over=N --critical-over=N"
   #     procs:
-  #       command: "/path/to/check-procs --pattern=PROCESS_NAME --state=STATE --warning-under=N"
+  #       command: "/usr/bin/check-procs --pattern=PROCESS_NAME --state=STATE --warning-under=N"
+  #     load_average:
+  #       command: "/usr/bin/check-load -w 3,2,1 -c 3,2,1"
+  #       # optional
+  #       notification_interval: 60
+  #       max_check_attempts: 1
+  #       check_interval: 5
+  #       timeout_seconds: 45
+  #       prevent_alert_auto_close: yes
+  #       memo: "メモをここに記載することができます"
+  #       env:
+  #         ENV_NAME: value
+  #       action:
+  #         command: "pa -auxf"
+  #         env:
+  #           ENV_NAME: value
+  #         user: "mackerel"
+  # extra_setting: ""
 
 mackerel_agent_install_agent_plugins: no
 mackerel_agent_install_check_plugins: no
