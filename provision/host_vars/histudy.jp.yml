@@ -3,6 +3,10 @@
 # https://github.com/dev-sec/ansible-os-hardening/blob/master/tasks/minimize_access.yml
 os_hardening_enabled: no
 
+common_ssh_allow_countries:
+  - JP
+  - US
+
 dehydrated_cfg:
   challengetype: dns-01
 
