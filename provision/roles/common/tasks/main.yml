@@ -7,8 +7,7 @@
 - name: set hostname
   hostname:
     name: "{{ common_hostname }}"
-  tags:
-    - hostname
+  tags: hostname
 - name: manage group and user
   import_tasks: user.yml
   tags:
@@ -25,23 +24,22 @@
   when: not result.stat.exists
 - name: setup ssh
   import_tasks: ssh.yml
-  tags:
-    - ssh
+  tags: ssh
 - name: setup sudo
   import_tasks: sudo.yml
-  tags:
-    - sudo
+  tags: sudo
 - name: install etckeeper
   apt:
     name: etckeeper
 - name: install common packages
   apt:
     name: "{{ common_packages }}"
+- name: setup rsync
+  import_tasks: rsync.yml
+  tags: rsync
 - name: setup ufw
   import_tasks: ufw.yml
-  tags:
-    - ufw
+  tags: ufw
 - name: setup fail2ban
   import_tasks: fail2ban.yml
-  tags:
-    - fail2ban
+  tags: fail2ban

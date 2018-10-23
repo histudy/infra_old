@@ -1,0 +1,7 @@
+- name: install rsync
+  apt:
+    name: rsync
+- name: create rsync setting file
+  template:
+    src: rsyncd.conf.j2
+    dest: /etc/rsyncd.conf
