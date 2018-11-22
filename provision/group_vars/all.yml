@@ -10,6 +10,7 @@ domain: histudy.jp
 common_groups:
   - name: histudy
   - name: kakogawa_infra
+  - name: webadmin
 
 common_users:
   - name: wate
@@ -17,6 +18,7 @@ common_users:
     groups:
       - histudy
       - kakogawa_infra
+      - webadmin
     authorized_keys:
       - "https://github.com/wate.keys"
   - name: sperkbird
@@ -30,6 +32,7 @@ common_users:
     admin: yes
     groups:
       - histudy
+      - webadmin
     authorized_keys:
       - "https://github.com/nogajun.keys"
   - name: 223n
@@ -37,6 +40,7 @@ common_users:
     groups:
       - histudy
       - kakogawa_infra
+      - webadmin
     authorized_keys:
       - "https://github.com/223n.keys"
   - name: fu7mu4

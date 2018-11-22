@@ -44,3 +44,8 @@
           when: result.stat.exists
       tags:
         - hostname
+    - name: change document root group and parmission
+      file:
+        path: /var/www/html
+        group: webadmin
+        mode: "g+w"
