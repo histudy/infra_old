@@ -48,4 +48,5 @@
       file:
         path: /var/www/html
         group: webadmin
-        mode: "g+w"
+        recurse: true
+        mode: "u+rw,g+rw,o+r"
