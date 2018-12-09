@@ -24,7 +24,7 @@ dehydrated_domains: []
   # - name: example.com
   #   domains:
   #     - example.com
-  #     - www.example.com
+  #     - *.example.com
   # - name: example.net
   #   domains: example.net
 

@@ -1,0 +1,3 @@
+dehydrated_config_dir: /etc/dehydrated
+dehydrated_account_dir: /var/lib/dehydrated/accounts
+dehydrated_cert_dir: /var/lib/dehydrated/certs
