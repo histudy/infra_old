@@ -16,7 +16,7 @@ dehydrated_domains:
       - "{{ domain }}"
       - "www.{{ domain }}"
 
-dehydrated_auto_execute: yes
+dehydrated_auto_execute: no
 
 dehydrated_hook_initialize: |
   export PROVIDER=cloudflare
