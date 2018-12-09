@@ -5,8 +5,8 @@
     default_release: "{{ ansible_distribution_release }}-backports"
 - name: create config file
   template:
-    src: localhost.sh.j2
-    dest: /etc/dehydrated/conf.d/localhost.sh
+    src: local.sh.j2
+    dest: /etc/dehydrated/conf.d/local.sh
 - name: create domains txt
   template:
     src: domains.txt.j2
@@ -19,7 +19,7 @@
 - name: register account key
   command: /usr/bin/dehydrated --register --accept-terms
   args:
-    creates: /var/lib/dehydrated/accounts
+    creates: "{{ dehydrated_account_dir }}"
 - name: sign/renew non-existent/changed/expiring certificates
   command: /usr/bin/dehydrated --cron
   when: dehydrated_auto_execute
