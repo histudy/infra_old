@@ -8,7 +8,7 @@
 - name: intsall boto3
   apt:
     name: python-boto3
-  when: lexicion_install_boto3
+  when: lexicon_install_boto3
 - name: install lexicon
   pip:
     name: dns-lexicon

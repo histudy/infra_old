@@ -6,7 +6,7 @@ require 'spec_helper'
   end
 end
 
-if property['lexicion_install_boto3']
+if property['lexicon_install_boto3']
   describe package('python-boto3') do
     it { should be_installed }
   end
