@@ -2,9 +2,13 @@
 - name: install dependency packages
   apt:
     name:
+      - python-certifi
       - python-requests
       - python-future
-      - python-boto3
+- name: intsall boto3
+  apt:
+    name: python-boto3
+  when: lexicion_install_boto3
 - name: install lexicon
   pip:
     name: dns-lexicon
