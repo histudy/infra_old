@@ -44,3 +44,9 @@ sudo apt-get install ansible
 ```shell
 ansible-galaxy install -r requirements.yml
 ```
+
+## ロールの更新
+
+```shell
+ansible-galaxy install -f -r requirements.yml
+```
