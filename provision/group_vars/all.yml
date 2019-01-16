@@ -1,9 +1,8 @@
 ---
 os_auth_pw_max_age: 99999
-ssh_allow_root_with_key: yes
-ssh_use_pam: yes
-sftp_enabled: yes
-
+ssh_allow_root_with_key: true
+ssh_use_pam: true
+sftp_enabled: true
 
 domain: histudy.jp
 
@@ -14,7 +13,7 @@ common_groups:
 
 common_users:
   - name: wate
-    admin: yes
+    admin: true
     groups:
       - histudy
       - kakogawa_infra
@@ -22,21 +21,21 @@ common_users:
     authorized_keys:
       - "https://github.com/wate.keys"
   - name: sperkbird
-    admin: yes
+    admin: true
     groups:
       - histudy
       - kakogawa_infra
     authorized_keys:
       - "https://github.com/sperkbird.keys"
   - name: nogajun
-    admin: yes
+    admin: true
     groups:
       - histudy
       - webadmin
     authorized_keys:
       - "https://github.com/nogajun.keys"
   - name: 223n
-    admin: yes
+    admin: true
     groups:
       - histudy
       - kakogawa_infra

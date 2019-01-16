@@ -1,7 +1,7 @@
 # dev-sec.os-hardeningの再適用の無効化
 # ※以下の処理の再適用に時間がかかるため
 # https://github.com/dev-sec/ansible-os-hardening/blob/master/tasks/minimize_access.yml
-os_hardening_enabled: no
+os_hardening_enabled: false
 
 common_ssh_allow_countries:
   - JP
@@ -16,7 +16,7 @@ dehydrated_domains:
       - "{{ domain }}"
       - "www.{{ domain }}"
 
-dehydrated_auto_execute: no
+dehydrated_auto_execute: false
 
 dehydrated_hook_initialize: |
   export PROVIDER=cloudflare
@@ -87,7 +87,7 @@ nginx_vhosts:
           allow 127.0.0.1;
           deny all;
 
-mackerel_agent_install_agent_plugins: yes
+mackerel_agent_install_agent_plugins: true
 
 mackerel_agent_cfg:
   plugin:
