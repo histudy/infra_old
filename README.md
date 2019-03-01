@@ -79,10 +79,12 @@ Ansibleを利用しサーバーの構成を管理しています。
 | CLOUDFLARE_EMAIL   | [Cloudflare][cloudflare]のアカウント     | terraform / provision  |
 | CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン    | terraform / provision  |
 | MACKEREL_API_KEY   | [Mackerel][mackerel]のAPIキー            | provision              |
+| SACLOUD_API_KEY    | [Sakura Cloud][sakura_cloud]のAPIキー    | terraform / provision  |
 
 [vagrant_cloud]: https://app.vagrantup.com/histudy
 [cloudflare]: https://www.cloudflare.com/
 [mackerel]: https://mackerel.io/
+[sakura_cloud]: https://cloud.sakura.ad.jp/
 
 ## ライセンス
 
