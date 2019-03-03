@@ -73,13 +73,14 @@ Ansibleを利用しサーバーの構成を管理しています。
 
 このリポジトリの内容を利用するには以下の環境変数を設定しておく必要があります。
 
-| 環境変数名         | 内容                                     | 利用箇所(ディレクトリ) |
-| ------------------ | ---------------------------------------- | ---------------------- |
-| VAGRANTCLOUD_TOKEN | [Vagrant Cloud][vagrant_cloud]のトークン | packer                 |
-| CLOUDFLARE_EMAIL   | [Cloudflare][cloudflare]のアカウント     | terraform / provision  |
-| CLOUDFLARE_TOKEN   | [Cloudflare][cloudflare]のAPIトークン    | terraform / provision  |
-| MACKEREL_API_KEY   | [Mackerel][mackerel]のAPIキー            | provision              |
-| SACLOUD_API_KEY    | [Sakura Cloud][sakura_cloud]のAPIキー    | terraform / provision  |
+| 環境変数名                      | 内容                                               | 利用箇所(ディレクトリ) |
+| ------------------------------- | -------------------------------------------------- | ---------------------- |
+| VAGRANTCLOUD_TOKEN              | [Vagrant Cloud][vagrant_cloud]のトークン           | packer                 |
+| CLOUDFLARE_EMAIL                | [Cloudflare][cloudflare]のアカウント               | terraform / provision  |
+| CLOUDFLARE_TOKEN                | [Cloudflare][cloudflare]のAPIトークン              | terraform / provision  |
+| MACKEREL_API_KEY                | [Mackerel][mackerel]のAPIキー                      | provision              |
+| SAKURACLOUD_ACCESS_TOKEN        | [Sakura Cloud][sakura_cloud]のトークン             | terraform / provision  |
+| SAKURACLOUD_ACCESS_TOKEN_SECRET | [Sakura Cloud][sakura_cloud]のシークレットトークン | terraform / provision  |
 
 [vagrant_cloud]: https://app.vagrantup.com/histudy
 [cloudflare]: https://www.cloudflare.com/
